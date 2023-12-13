@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcxt4pqqi0uo1"]
+
+[ext_resource type="Texture2D" uid="uid://ccpnxpxwbdv5n" path="res://Sprites/MegaSheet.png" id="1_onp60"]
+[ext_resource type="Script" path="res://Player/player.gd" id="1_xiwrf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6hofe"]
+size = Vector2(11, 20)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_xiwrf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -15)
+texture = ExtResource("1_onp60")
+hframes = 16
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -10)
+shape = SubResource("RectangleShape2D_6hofe")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
