@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cen5axw8145tr"]
+
+[ext_resource type="PackedScene" uid="uid://dbkr3irqrrl8h" path="res://OtherScenes/projectile.tscn" id="1_rqoga"]
+[ext_resource type="Texture2D" uid="uid://cnns5hmjvvxfx" path="res://Sprites/Lemon.png" id="2_2v780"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q033m"]
+size = Vector2(8, 6)
+
+[node name="Lemon" instance=ExtResource("1_rqoga")]
+speed = 400
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="0"]
+position = Vector2(2.38419e-07, 0)
+scale = Vector2(0.4, 0.3)
+
+[node name="HitBoxComponent" parent="." index="1"]
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent" index="0"]
+shape = SubResource("RectangleShape2D_q033m")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+texture = ExtResource("2_2v780")

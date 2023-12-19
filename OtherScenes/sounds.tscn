@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://c4042yeimtjii"]
+
+[ext_resource type="Script" path="res://OtherScenes/sounds.gd" id="1_icp0n"]
+[ext_resource type="AudioStream" uid="uid://f5ji7g7uekdx" path="res://Music and Sounds/death.wav" id="2_mu8xl"]
+[ext_resource type="AudioStream" uid="uid://co6fx6omk61f4" path="res://Music and Sounds/enemybullet.wav" id="3_e2uss"]
+[ext_resource type="AudioStream" uid="uid://bkgieadheilpw" path="res://Music and Sounds/enemydeflect.wav" id="4_kxg3j"]
+[ext_resource type="AudioStream" uid="uid://bogxfbx3sdbwq" path="res://Music and Sounds/enemyhurt.wav" id="5_f6fcj"]
+[ext_resource type="AudioStream" uid="uid://chgnenq66nav0" path="res://Music and Sounds/hurt.wav" id="6_gpl75"]
+[ext_resource type="AudioStream" uid="uid://kk7ajn6cf54w" path="res://Music and Sounds/land.wav" id="7_lt584"]
+[ext_resource type="AudioStream" uid="uid://vuj4wscjoei0" path="res://Music and Sounds/lemonbullet.wav" id="8_g7wdw"]
+[ext_resource type="AudioStream" uid="uid://bve5phffd7wuv" path="res://Music and Sounds/menufocus.wav" id="9_ul3vy"]
+[ext_resource type="AudioStream" uid="uid://pk10ffdsc1bw" path="res://Music and Sounds/pause.wav" id="10_e31nl"]
+
+[node name="Sounds" type="Node"]
+script = ExtResource("1_icp0n")
+death = ExtResource("2_mu8xl")
+enemy_bullet = ExtResource("3_e2uss")
+enemy_deflect = ExtResource("4_kxg3j")
+enemy_hurt = ExtResource("5_f6fcj")
+hurt = ExtResource("6_gpl75")
+land = ExtResource("7_lt584")
+lemon_bullet = ExtResource("8_g7wdw")
+menu_focus = ExtResource("9_ul3vy")
+pause = ExtResource("10_e31nl")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D3" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D4" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D5" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D6" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D7" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D8" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D9" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D10" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D11" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"
+
+[node name="AudioStreamPlayer2D12" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sounds"

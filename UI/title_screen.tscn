@@ -1,0 +1,405 @@
+[gd_scene load_steps=26 format=3 uid="uid://cdh7uk270wrky"]
+
+[ext_resource type="Script" path="res://UI/title_screen.gd" id="1_ekvdb"]
+[ext_resource type="Texture2D" uid="uid://dw1bmd6gfbmgl" path="res://Sprites/Rockman9_Title.png" id="1_jv1bw"]
+[ext_resource type="Texture2D" uid="uid://dktrbb0to4iaf" path="res://Sprites/Mega Man Big.png" id="2_can4x"]
+[ext_resource type="Theme" uid="uid://cqo0ps1p0cu2i" path="res://UI/default_theme.tres" id="3_ta5va"]
+
+[sub_resource type="Animation" id="Animation_0s43y"]
+resource_name = "flash"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+
+[sub_resource type="Animation" id="Animation_jrjh1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5tlty"]
+_data = {
+"RESET": SubResource("Animation_jrjh1"),
+"flash": SubResource("Animation_0s43y")
+}
+
+[sub_resource type="Animation" id="Animation_54lm2"]
+resource_name = "blink"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/VBoxContainer/Start:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(2.15792e-05, 0.000455583, 8.63169e-05, 1e-05, 1.81459e-05),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bobby"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/VBoxContainer/Start:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k4mc6"]
+resource_name = "fade_in"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/VBoxContainer/Start:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8nbjo"]
+_data = {
+"RESET": SubResource("Animation_bobby"),
+"blink": SubResource("Animation_54lm2"),
+"fade_in": SubResource("Animation_k4mc6")
+}
+
+[sub_resource type="Animation" id="Animation_754lh"]
+resource_name = "blink"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/VBoxContainer/Quit:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(0.000178721, 1e-05, 1e-05, 1e-05, 1.2394e-05),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_30msd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/VBoxContainer/Quit:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_88ced"]
+resource_name = "fade_in"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/VBoxContainer/Quit:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7apqm"]
+_data = {
+"RESET": SubResource("Animation_30msd"),
+"blink": SubResource("Animation_754lh"),
+"fade_in": SubResource("Animation_88ced")
+}
+
+[sub_resource type="Animation" id="Animation_e6m0w"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigMegaMan:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_a7pv8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigMegaMan:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5kt4t"]
+_data = {
+"RESET": SubResource("Animation_a7pv8"),
+"fade_in": SubResource("Animation_e6m0w")
+}
+
+[sub_resource type="Animation" id="Animation_6dkx8"]
+resource_name = "blink"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleScreen:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+
+[sub_resource type="Animation" id="Animation_fshvr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleScreen:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TitleScreen:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-107, 28.5)]
+}
+
+[sub_resource type="Animation" id="Animation_v7b5s"]
+resource_name = "tween_in"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleScreen:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1.10957, 1.07177),
+"update": 0,
+"values": [Vector2(-107, 28.5), Vector2(165, 28.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7xntd"]
+_data = {
+"RESET": SubResource("Animation_fshvr"),
+"blink": SubResource("Animation_6dkx8"),
+"tween_in": SubResource("Animation_v7b5s")
+}
+
+[sub_resource type="Animation" id="Animation_nutoq"]
+resource_name = "fade_in"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_v2sjg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qcb7g"]
+_data = {
+"RESET": SubResource("Animation_v2sjg"),
+"fade_in": SubResource("Animation_nutoq")
+}
+
+[node name="TitleScreen" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_ekvdb")
+
+[node name="Buttons" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -14.0
+offset_right = 42.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Buttons"]
+layout_mode = 2
+
+[node name="Start" type="Button" parent="Buttons/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(32, 8)
+layout_mode = 2
+text = "Start"
+
+[node name="Quit" type="Button" parent="Buttons/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(32, 8)
+layout_mode = 2
+text = "Quit"
+
+[node name="TitleScreen" type="Sprite2D" parent="."]
+position = Vector2(-107, 28.5)
+scale = Vector2(0.890625, 0.890625)
+texture = ExtResource("1_jv1bw")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TitleScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_5tlty")
+}
+
+[node name="BigMegaMan" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(268, 110)
+scale = Vector2(0.788889, 0.788889)
+texture = ExtResource("2_can4x")
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 67.0
+offset_top = 150.0
+offset_right = 421.0
+offset_bottom = 195.0
+theme = ExtResource("3_ta5va")
+text = "@capcom co. , ltd
+2008 all rights reserved."
+
+[node name="Node" type="Node" parent="."]
+
+[node name="StartBlink" type="AnimationPlayer" parent="Node"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_8nbjo")
+}
+
+[node name="QuitBlink" type="AnimationPlayer" parent="Node"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_7apqm")
+}
+
+[node name="BigMegaMan2" type="AnimationPlayer" parent="Node"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_5kt4t")
+}
+
+[node name="TitleScreen2" type="AnimationPlayer" parent="Node"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_7xntd")
+}
+
+[node name="Label" type="AnimationPlayer" parent="Node"]
+libraries = {
+"": SubResource("AnimationLibrary_qcb7g")
+}
+
+[node name="BGEffects" type="CPUParticles2D" parent="."]
+position = Vector2(320, 88)
+emitting = false
+amount = 100
+lifetime = 6.0
+emission_shape = 3
+emission_rect_extents = Vector2(1, 90)
+direction = Vector2(-1, 0)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 300.0
+
+[connection signal="pressed" from="Buttons/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Buttons/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

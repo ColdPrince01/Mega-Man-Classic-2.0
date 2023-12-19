@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://vuj4wscjoei0"
+path="res://.godot/imported/lemonbullet.wav-6f2410aa06541f1a44cc20d72e4b3af1.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/lemonbullet.wav"
+dest_files=["res://.godot/imported/lemonbullet.wav-6f2410aa06541f1a44cc20d72e4b3af1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bkgieadheilpw"
+path="res://.godot/imported/enemydeflect.wav-44f6eb4204c693ab1e6abbe823c486bc.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/enemydeflect.wav"
+dest_files=["res://.godot/imported/enemydeflect.wav-44f6eb4204c693ab1e6abbe823c486bc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

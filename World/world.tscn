@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://by55erjf78f2o"]
+[gd_scene load_steps=4 format=3 uid="uid://by55erjf78f2o"]
 
 [ext_resource type="PackedScene" uid="uid://dcxt4pqqi0uo1" path="res://Player/player.tscn" id="1_0bcd7"]
+[ext_resource type="PackedScene" uid="uid://bbvpfu8bwc0qt" path="res://UI/health_meter.tscn" id="2_by2l6"]
+[ext_resource type="PackedScene" uid="uid://ixc4llf2rq8p" path="res://Enemies/enemy.tscn" id="3_qiayl"]
 
 [node name="World" type="Node2D"]
 
@@ -14,3 +16,17 @@ dash_speed = 160
 position = Vector2(-15.9999, -16)
 scale = Vector2(0.324025, 0.324025)
 polygon = PackedVector2Array(-0.00018692, -9.53674e-05, 49.3787, -9.53674e-05, 49.3787, 469.1, 296.273, 469.1, 296.273, 567.858, 962.889, 567.858, 962.889, 493.789, 1111.03, 493.789, 1111.03, 567.858, 1234.47, 567.858, 1234.47, 345.652, 1382.61, 345.652, 1382.61, 567.858, 2419.57, 567.858, 2419.57, -74.0685, 2567.7, -74.0685, 2567.7, 839.442, -0.00018692, 839.442)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HealthMeter" parent="UI" instance=ExtResource("2_by2l6")]
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 4.0
+offset_bottom = 3.0
+
+[node name="MetTool" parent="." instance=ExtResource("3_qiayl")]
+position = Vector2(261, 127)
+
+[node name="MetTool2" parent="." instance=ExtResource("3_qiayl")]
+position = Vector2(314, 144)
