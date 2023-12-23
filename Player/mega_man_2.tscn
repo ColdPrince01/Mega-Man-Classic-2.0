@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxxgpojurp7h2"]
+
+[ext_resource type="PackedScene" uid="uid://clxvytpthau81" path="res://Player/mega_man_sprite.tscn" id="1_5ptlo"]
+[ext_resource type="Script" path="res://Player/mega_man_2.gd" id="1_yekd0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6trhm"]
+size = Vector2(11, 20)
+
+[node name="MegaMan2" type="CharacterBody2D"]
+script = ExtResource("1_yekd0")
+walk_speed = 78.0
+gravity = 900
+jump_force = 320
+max_fall_speed = 360
+
+[node name="MegaManSprite" parent="." instance=ExtResource("1_5ptlo")]
+parent_player = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_6trhm")
+
+[editable path="MegaManSprite"]

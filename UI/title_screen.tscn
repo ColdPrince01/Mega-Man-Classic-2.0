@@ -5,6 +5,21 @@
 [ext_resource type="Texture2D" uid="uid://dktrbb0to4iaf" path="res://Sprites/Mega Man Big.png" id="2_can4x"]
 [ext_resource type="Theme" uid="uid://cqo0ps1p0cu2i" path="res://UI/default_theme.tres" id="3_ta5va"]
 
+[sub_resource type="Animation" id="Animation_jrjh1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_0s43y"]
 resource_name = "flash"
 length = 0.5
@@ -21,42 +36,10 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 0]
 }
 
-[sub_resource type="Animation" id="Animation_jrjh1"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5tlty"]
 _data = {
 "RESET": SubResource("Animation_jrjh1"),
 "flash": SubResource("Animation_0s43y")
-}
-
-[sub_resource type="Animation" id="Animation_54lm2"]
-resource_name = "blink"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Buttons/VBoxContainer/Start:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
-"transitions": PackedFloat32Array(2.15792e-05, 0.000455583, 8.63169e-05, 1e-05, 1.81459e-05),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_bobby"]
@@ -71,7 +54,23 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_54lm2"]
+resource_name = "blink"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/VBoxContainer/Start:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(2.15792e-05, 0.000455583, 8.63169e-05, 1e-05, 1.81459e-05),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_k4mc6"]
@@ -97,6 +96,21 @@ _data = {
 "fade_in": SubResource("Animation_k4mc6")
 }
 
+[sub_resource type="Animation" id="Animation_30msd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/VBoxContainer/Quit:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_754lh"]
 resource_name = "blink"
 length = 0.8
@@ -111,21 +125,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.000178721, 1e-05, 1e-05, 1e-05, 1.2394e-05),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_30msd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Buttons/VBoxContainer/Quit:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_88ced"]
@@ -151,6 +150,21 @@ _data = {
 "fade_in": SubResource("Animation_88ced")
 }
 
+[sub_resource type="Animation" id="Animation_a7pv8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigMegaMan:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_e6m0w"]
 resource_name = "fade_in"
 length = 0.5
@@ -167,41 +181,10 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_a7pv8"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BigMegaMan:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5kt4t"]
 _data = {
 "RESET": SubResource("Animation_a7pv8"),
 "fade_in": SubResource("Animation_e6m0w")
-}
-
-[sub_resource type="Animation" id="Animation_6dkx8"]
-resource_name = "blink"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TitleScreen:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 0]
 }
 
 [sub_resource type="Animation" id="Animation_fshvr"]
@@ -231,6 +214,22 @@ tracks/1/keys = {
 "values": [Vector2(-107, 28.5)]
 }
 
+[sub_resource type="Animation" id="Animation_6dkx8"]
+resource_name = "blink"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleScreen:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+
 [sub_resource type="Animation" id="Animation_v7b5s"]
 resource_name = "tween_in"
 length = 0.6
@@ -254,6 +253,21 @@ _data = {
 "tween_in": SubResource("Animation_v7b5s")
 }
 
+[sub_resource type="Animation" id="Animation_v2sjg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_nutoq"]
 resource_name = "fade_in"
 length = 0.7
@@ -268,21 +282,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_v2sjg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../Label:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qcb7g"]
@@ -315,21 +314,21 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Buttons"]
+visible = false
 layout_mode = 2
 
 [node name="Start" type="Button" parent="Buttons/VBoxContainer"]
-modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(32, 8)
 layout_mode = 2
 text = "Start"
 
 [node name="Quit" type="Button" parent="Buttons/VBoxContainer"]
-modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(32, 8)
 layout_mode = 2
 text = "Quit"
 
 [node name="TitleScreen" type="Sprite2D" parent="."]
+z_index = 4
 position = Vector2(-107, 28.5)
 scale = Vector2(0.890625, 0.890625)
 texture = ExtResource("1_jv1bw")
@@ -342,6 +341,7 @@ libraries = {
 
 [node name="BigMegaMan" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
+z_index = 4
 position = Vector2(268, 110)
 scale = Vector2(0.788889, 0.788889)
 texture = ExtResource("2_can4x")

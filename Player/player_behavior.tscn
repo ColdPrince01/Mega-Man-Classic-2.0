@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cubyj4rgu66hy"]
+
+[ext_resource type="Script" path="res://Player/player_behavior.gd" id="1_7swxv"]
+
+[node name="PlayerBehavior" type="Node"]
+script = ExtResource("1_7swxv")

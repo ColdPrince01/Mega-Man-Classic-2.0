@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwk5un35atwks"]
+
+[ext_resource type="Script" path="res://OtherScenes/camera_limits.gd" id="1_i5o06"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rslak"]
+bg_color = Color(0.207843, 0.372549, 0.8, 1)
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.329412, 0.647059, 0.972549, 1)
+
+[node name="CameraLimits" type="Panel"]
+offset_right = 320.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_rslak")
+script = ExtResource("1_i5o06")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 45.0
+offset_bottom = 14.0
+theme_override_colors/font_color = Color(0, 0.52549, 0.729412, 1)
+text = "View"

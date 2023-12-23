@@ -21,6 +21,7 @@ Utils="*res://Scripts/Utils.gd"
 Events="*res://Scripts/Events.gd"
 PlayerStats="*res://Player/player_stats.tscn"
 Sounds="*res://OtherScenes/sounds.tscn"
+EventTransitions="*res://OtherScenes/event_transitions.tscn"
 
 [display]
 
