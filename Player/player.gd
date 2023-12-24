@@ -1,4 +1,4 @@
-class_name Player
+class_name MegaMan
 extends CharacterBody2D
 
 
@@ -8,7 +8,6 @@ const LemonScene = preload("res://Player/lemon.tscn")
 const ExplosionEffectScene = preload("res://OtherScenes/explosion_effect.tscn")
 
 @onready var mega_man_sprite = $MegaManSprite
-@onready var animation_player = $AnimationPlayer
 @onready var coyote_jump_timer = $CoyoteJumpTimer
 @onready var dash_timer = $Timers/DashTimer
 @onready var dash_buffer = $Timers/DashBuffer
@@ -18,11 +17,14 @@ const ExplosionEffectScene = preload("res://OtherScenes/explosion_effect.tscn")
 @onready var buster_position = Vector2(20,0)
 @onready var fire_rate = $Timers/FireRate
 @onready var floor_cast = $FloorCast
-@onready var camera_2d = $Camera2D
 @onready var hurt_box_component = $HurtBoxComponent
+@onready var character_animator = $CharacterAnimator
+@onready var blinking_animation = $BlinkingAnimation
+@onready var invincibility_timer = $Timers/InvincibilityTimer
 
 
-const MAX_TIP_TOE_FRAME = 7
+
+
 
 
 
@@ -34,6 +36,7 @@ var damaged = false #variable for when the player is damaged and is experiencing
 var just_landed = false 
 var key_pressed_time = 0.0
 
+
 #Values are given as px/seconds (ex. Max_speed is equal to 82.5px/sec 
 @export var acceleration = 512
 @export var max_speed = 82.5
@@ -41,24 +44,26 @@ var key_pressed_time = 0.0
 @export var gravity = 980
 @export var jump_force = 225
 @export var max_fall_speed = 485
-@export var wall_slide_speed = 42
-@export var max_wall_slide_speed = 128
 @export var gravity_multiplier = 1.0
 @export var dash_speed = 160
 @export var knockback_distance = 50.0
 
 func _ready():
 	PlayerStats.no_health.connect(death) #connect to death when the player dies 
+	
+
 
 func _physics_process(delta):
 	var input_direction = Input.get_axis("ui_left","ui_right")
 	handle_gravity(delta)
+	
 	if is_moving(input_direction):
 		apply_horizontal_force(delta, input_direction)
 	else:
 		apply_friction(delta, input_direction)
-	jump_check()
 	
+	
+	jump_check()
 	if Input.is_action_pressed("ui_down"):
 		if Input.is_action_just_pressed("slide") and is_on_floor() and can_slide:
 			sliding = true
@@ -68,6 +73,7 @@ func _physics_process(delta):
 
 	land_sound()
 	if Input.is_action_just_pressed("Fire") and fire_rate.time_left == 0:
+		if sliding: return
 		fire_bullet(delta)
 		fire_rate.start()
 		bullet_buffer.start()
@@ -79,10 +85,15 @@ func _physics_process(delta):
 		Engine.time_scale = 0.1
 	else: 
 		Engine.time_scale = 1.0
+	
 	var direction = get_direction().x
-	if sliding:
+	
+	
+	if sliding == true:
 		velocity.y = 0.0
-		velocity.x = sign(direction) * dash_speed
+		velocity.x = (direction) * dash_speed
+		print(velocity.x)
+		print(dash_timer.wait_time)
 	else:
 		velocity.x = input_direction * max_speed
 		
@@ -122,6 +133,8 @@ func is_moving(input_direction):
 func handle_gravity(delta):
 	if not is_on_floor(): #If the player is not on the floor 
 		velocity.y += gravity * gravity_multiplier * delta
+		velocity.y = clamp(velocity.y, -jump_force, max_fall_speed)
+		print(velocity.y)
 
 
 func jump_check():
@@ -144,37 +157,28 @@ func apply_friction(delta, input_direction):
 
 
 func update_animation(input_direction):
-	if damaged:
-			mega_man_sprite.character_animator.play("damaged")
-	else:
-			pass
-			#add damaged slide animation here
-	if is_on_floor():
+	if damaged == true:
+		character_animator.play("damaged")
+	elif is_on_floor():
 		if is_firing:
-			if not sliding:
-				if is_moving(input_direction):
-					mega_man_sprite.character_animator.play("shooting_walk")
-				else:
-					mega_man_sprite.character_animator.play("idle_shoot")
+			if is_moving(input_direction):
+				character_animator.play("shooting_walk")
 			else:
-				pass
+				character_animator.play("idle_shoot")
 		else:
 			if not sliding:
 				if is_moving(input_direction):
-					mega_man_sprite.character_animator.play("run")
+					character_animator.play("run")
 				else:
-					mega_man_sprite.character_animator.play("idle")
+					character_animator.play("idle")
 			else:
-				if sliding:
-					mega_man_sprite.character_animator.play("slide")
+				character_animator.play("sliding")
 	else:
 		if is_firing:
-			if not is_on_floor():
-				mega_man_sprite.character_animator.play("jump_shoot")
+			character_animator.play("jump_shoot")
 		else:
-			if not is_on_floor():
-				mega_man_sprite.character_animator.play("jump")
-
+			character_animator.play("jump")
+	
 
 func land_sound():
 	if is_on_floor():
@@ -193,6 +197,8 @@ func fire_bullet(delta):
 	bullet.update_velocity()
 	bullet.velocity.x = sign(direction) * bullet.speed
 	print(bullet.velocity.x)
+
+
 
 
 func _on_dash_timer_timeout():
@@ -214,7 +220,6 @@ func _on_bullet_buffer_timeout():
 
 #function for when the player dies
 func death():
-	camera_2d.reparent(get_tree().current_scene)
 	Events.add_screenshake.emit(4, 0.3)
 	Utils.instantiate_scene_on_world(ExplosionEffectScene, global_position + Vector2(0,-7))
 	queue_free()
@@ -222,10 +227,14 @@ func death():
 func _on_hurt_box_component_hurt(hitbox, damage):
 	damaged = true
 	Sounds.play(Sounds.hurt)
-	Events.add_screenshake.emit(3,0.25)
 	PlayerStats.health -= damage
 	hurt_box_component.is_invincible = true
-	animation_player.play("hurt")
-	hurt_box_component.is_invincible = false 
+	invincibility_timer.start()
+	blinking_animation.play("hurt")
+	await blinking_animation.animation_finished
 	damaged = false
 
+
+
+func _on_invincibility_timer_timeout():
+	hurt_box_component.is_invincible = false

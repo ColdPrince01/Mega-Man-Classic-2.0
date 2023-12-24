@@ -1,6 +1,5 @@
 extends Panel
 
-@onready var label = $Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -8,6 +7,7 @@ func _ready():
 		position.x, #left limit
 		position.x + size.x, #right limit
 		position.y, #top limit
-		position.y + size.y, #bottom limit
-		
+		position.y + size.y, #bottom limit	
 	)
+	
+	hide()

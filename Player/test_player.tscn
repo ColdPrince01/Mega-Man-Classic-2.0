@@ -1,7 +1,28 @@
-[gd_scene load_steps=15 format=3 uid="uid://clxvytpthau81"]
+[gd_scene load_steps=29 format=3 uid="uid://dej8dwa6y3t55"]
 
-[ext_resource type="Texture2D" uid="uid://b17p26md36ty6" path="res://Sprites/MegaMan.png" id="1_ds06f"]
-[ext_resource type="Script" path="res://Player/mega_man_sprite.gd" id="2_26dmp"]
+[ext_resource type="Script" path="res://TestPlayer.gd" id="1_8ai5p"]
+[ext_resource type="Texture2D" uid="uid://b17p26md36ty6" path="res://Sprites/MegaMan.png" id="2_7lkew"]
+[ext_resource type="PackedScene" uid="uid://cvebhfuo1xb35" path="res://StateMachine/state_machine.tscn" id="3_yn72c"]
+[ext_resource type="Script" path="res://Player/Idle.gd" id="4_rsn1g"]
+[ext_resource type="Script" path="res://Scripts/PlayerMovementData.gd" id="5_kjbax"]
+[ext_resource type="Script" path="res://StateMachine/JumpState.gd" id="6_aumog"]
+[ext_resource type="Script" path="res://Player/Move.gd" id="6_sbura"]
+[ext_resource type="PackedScene" uid="uid://e8tyv6nw01dw" path="res://OtherScenes/camera_2d.tscn" id="9_752fp"]
+[ext_resource type="Script" path="res://Player/Slide.gd" id="9_kiqhl"]
+[ext_resource type="Script" path="res://Player/MovementComponent.gd" id="10_43urb"]
+
+[sub_resource type="Resource" id="Resource_tk04i"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
 
 [sub_resource type="Animation" id="Animation_o7lvi"]
 length = 0.001
@@ -193,19 +214,129 @@ _data = {
 "tip_toe_shoot": SubResource("Animation_1la8a")
 }
 
-[node name="MegaManSprite" type="Sprite2D"]
-texture = ExtResource("1_ds06f")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_46gj7"]
+size = Vector2(11, 20)
+
+[sub_resource type="Resource" id="Resource_ltdcr"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
+
+[sub_resource type="Resource" id="Resource_2hbsh"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
+
+[sub_resource type="Resource" id="Resource_gagaf"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
+
+[sub_resource type="Resource" id="Resource_8te84"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
+
+[node name="TestPlayer" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_8ai5p")
+movement_data = SubResource("Resource_tk04i")
+
+[node name="MegaManSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_7lkew")
 hframes = 116
 vframes = 16
-script = ExtResource("2_26dmp")
 
 [node name="CharacterAnimator" type="AnimationPlayer" parent="."]
+root_node = NodePath("../MegaManSprite")
 libraries = {
 "": SubResource("AnimationLibrary_erlnu")
 }
 
-[node name="ShotCooldown" type="Timer" parent="."]
-wait_time = 0.25
-one_shot = true
+[node name="NormalCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_46gj7")
 
-[connection signal="timeout" from="ShotCooldown" to="." method="_on_shot_cooldown_timeout"]
+[node name="SlideCollision" type="CollisionShape2D" parent="."]
+position = Vector2(1, 8)
+scale = Vector2(2, 0.5)
+shape = SubResource("RectangleShape2D_46gj7")
+disabled = true
+
+[node name="Camera2D" parent="." instance=ExtResource("9_752fp")]
+position = Vector2(0, 0)
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("init_state") instance=ExtResource("3_yn72c")]
+init_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("jump_state", "move_state", "slide_state")]
+script = ExtResource("4_rsn1g")
+jump_state = NodePath("../Jump")
+move_state = NodePath("../Move")
+slide_state = NodePath("../Slide")
+movement_data = SubResource("Resource_ltdcr")
+animation_name = "idle"
+
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state", "slide_state")]
+script = ExtResource("6_sbura")
+idle_state = NodePath("../Idle")
+jump_state = NodePath("../Jump")
+slide_state = NodePath("../Slide")
+movement_data = SubResource("Resource_2hbsh")
+animation_name = "run"
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "move_state")]
+script = ExtResource("6_aumog")
+idle_state = NodePath("../Idle")
+move_state = NodePath("../Move")
+movement_data = SubResource("Resource_gagaf")
+animation_name = "jump"
+
+[node name="Slide" type="Node" parent="StateMachine" node_paths=PackedStringArray("slide_state", "idle_state", "move_state", "jump_state")]
+script = ExtResource("9_kiqhl")
+slide_state = NodePath(".")
+idle_state = NodePath("../Idle")
+move_state = NodePath("../Move")
+jump_state = NodePath("../Jump")
+slide_time = 0.4
+movement_data = SubResource("Resource_8te84")
+animation_name = "sliding"
+
+[node name="MovementComponent" type="Node" parent="."]
+script = ExtResource("10_43urb")
+
+[node name="CeilingCast" type="RayCast2D" parent="."]
+position = Vector2(0, 3)
+target_position = Vector2(0, -6)

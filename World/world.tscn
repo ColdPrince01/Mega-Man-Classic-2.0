@@ -1,17 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://by55erjf78f2o"]
+[gd_scene load_steps=5 format=3 uid="uid://by55erjf78f2o"]
 
-[ext_resource type="PackedScene" uid="uid://dcxt4pqqi0uo1" path="res://Player/player.tscn" id="1_0bcd7"]
 [ext_resource type="Script" path="res://World/world.gd" id="1_o5m11"]
 [ext_resource type="PackedScene" uid="uid://bbvpfu8bwc0qt" path="res://UI/health_meter.tscn" id="2_by2l6"]
-[ext_resource type="PackedScene" uid="uid://ixc4llf2rq8p" path="res://Enemies/enemy.tscn" id="3_qiayl"]
-[ext_resource type="PackedScene" uid="uid://jm53p13xqaul" path="res://OtherScenes/galaxy_man_tiles.tscn" id="4_fukgb"]
+[ext_resource type="PackedScene" uid="uid://dxtcmcuv30kr8" path="res://World/galaxy_man_level.tscn" id="4_mm6ay"]
+[ext_resource type="PackedScene" uid="uid://dej8dwa6y3t55" path="res://Player/test_player.tscn" id="4_wnu5d"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_o5m11")
 
-[node name="Player" parent="." instance=ExtResource("1_0bcd7")]
-position = Vector2(176, 152)
-dash_speed = 160
+[node name="TestPlayer" parent="." instance=ExtResource("4_wnu5d")]
+position = Vector2(162, 119)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -21,13 +19,4 @@ offset_top = 3.0
 offset_right = 4.0
 offset_bottom = 3.0
 
-[node name="GalaxyManLevel" type="Node2D" parent="."]
-
-[node name="MetTool" parent="GalaxyManLevel" instance=ExtResource("3_qiayl")]
-position = Vector2(261, 127)
-
-[node name="MetTool2" parent="GalaxyManLevel" instance=ExtResource("3_qiayl")]
-position = Vector2(314, 144)
-
-[node name="GalaxyManTiles" parent="GalaxyManLevel" instance=ExtResource("4_fukgb")]
-layer_0/tile_data = PackedInt32Array(720896, 131072, 1, 720897, 196608, 0, 720898, 196608, 0, 720899, 196608, 0, 720900, 196608, 0, 720901, 196608, 0, 720902, 196608, 0, 720903, 196608, 0, 720904, 196608, 0, 720905, 196608, 0, 720906, 196608, 0, 720907, 196608, 0, 720908, 196608, 0, 720909, 196608, 0, 720910, 196608, 0, 720911, 196608, 0, 720912, 196608, 0, 720913, 196608, 0, 720914, 196608, 0, 720915, 196608, 0, 720916, 196608, 0, 720917, 196608, 0, 720918, 196608, 0, 720920, 196608, 0, 720919, 196608, 0, 720921, 196608, 0, 720922, 196608, 0, 720923, 196608, 0, 720924, 196608, 0, 720925, 196608, 0, 720926, 196608, 0, 720927, 196608, 0, 720928, 196608, 0, 720929, 196608, 0, 720934, 131072, 1, 720933, 196608, 0, 720932, 196608, 0, 720931, 196608, 0, 720930, 196608, 0)
+[node name="GalaxyManLevel" parent="." instance=ExtResource("4_mm6ay")]

@@ -1,38 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://dcxt4pqqi0uo1"]
+[gd_scene load_steps=22 format=3 uid="uid://dcxt4pqqi0uo1"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_xiwrf"]
 [ext_resource type="Texture2D" uid="uid://b17p26md36ty6" path="res://Sprites/MegaMan.png" id="2_d8qlq"]
+[ext_resource type="PackedScene" uid="uid://e8tyv6nw01dw" path="res://OtherScenes/camera_2d.tscn" id="4_c1dal"]
 [ext_resource type="PackedScene" uid="uid://b1xjd73y6tlek" path="res://OtherScenes/hurt_box_component.tscn" id="4_pbyu7"]
-
-[sub_resource type="Animation" id="Animation_o7lvi"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_3uww2"]
-resource_name = "damaged"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [13]
-}
 
 [sub_resource type="Animation" id="Animation_2tiuv"]
 resource_name = "idle"
@@ -51,24 +22,8 @@ tracks/0/keys = {
 "values": [0, 1, 0]
 }
 
-[sub_resource type="Animation" id="Animation_s8io3"]
-resource_name = "idle_shoot"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 1.1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [116, 117, 116]
-}
-
-[sub_resource type="Animation" id="Animation_jynlp"]
-resource_name = "jump"
+[sub_resource type="Animation" id="Animation_o7lvi"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -79,22 +34,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [8]
-}
-
-[sub_resource type="Animation" id="Animation_miuw7"]
-resource_name = "jump_shoot"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [123]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_rr78j"]
@@ -115,11 +55,8 @@ tracks/0/keys = {
 "values": [3, 4, 5, 6]
 }
 
-[sub_resource type="Animation" id="Animation_oeq0a"]
-resource_name = "shooting_walk"
-length = 0.48
-loop_mode = 1
-step = 0.12
+[sub_resource type="Animation" id="Animation_jynlp"]
+resource_name = "jump"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -127,10 +64,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [119, 120, 121, 122]
+"values": [8]
 }
 
 [sub_resource type="Animation" id="Animation_cn0g5"]
@@ -147,6 +84,70 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [11]
+}
+
+[sub_resource type="Animation" id="Animation_3uww2"]
+resource_name = "damaged"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [13]
+}
+
+[sub_resource type="Animation" id="Animation_s8io3"]
+resource_name = "idle_shoot"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [116, 117, 116]
+}
+
+[sub_resource type="Animation" id="Animation_miuw7"]
+resource_name = "jump_shoot"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [123]
+}
+
+[sub_resource type="Animation" id="Animation_oeq0a"]
+resource_name = "shooting_walk"
+length = 0.48
+loop_mode = 1
+step = 0.12
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [119, 120, 121, 122]
 }
 
 [sub_resource type="Animation" id="Animation_run7j"]
@@ -200,33 +201,6 @@ size = Vector2(11, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h803n"]
 size = Vector2(11, 18)
 
-[sub_resource type="Animation" id="Animation_h7v7s"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MegaManSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [13]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MegaManSprite:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="Animation" id="Animation_pb2qp"]
 resource_name = "hurt"
 length = 0.3
@@ -254,6 +228,33 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_h7v7s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MegaManSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [13]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MegaManSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cxidw"]
@@ -298,6 +299,9 @@ shape = SubResource("RectangleShape2D_6hofe")
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
+
+[node name="Camera2D" parent="." instance=ExtResource("4_c1dal")]
+position = Vector2(1, -5)
 
 [node name="Timers" type="Node" parent="."]
 
