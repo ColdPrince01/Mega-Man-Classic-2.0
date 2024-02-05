@@ -4,6 +4,8 @@ extends State
 @export var idle_state : State
 @export var move_state : State
 @export var jump_state : State
+@export var stagger_state : State
+
 @export var slide_time := 0.5
 
 var direction := 1
@@ -17,6 +19,7 @@ func enter() -> void:
 	parent.normal_collision.set_deferred("disabled", true) #set normal collider to be off 
 	slide_timer = slide_time
 	parent.velocity.y = 0.0
+	parent.is_sliding = true
 	
 	if parent.mega_man_sprite.flip_h: #if the player sprite is flipped
 		direction = -1 #direction is equal to left 
@@ -24,7 +27,11 @@ func enter() -> void:
 		direction = 1 #direction is equal to right  
 
 func process_input(event: InputEvent) -> State:
-	return null #take no input during this state 
+	#if the player taps left while moving right, or taps right while moving left
+	if Input.is_action_just_pressed("ui_left") and direction == 1 or Input.is_action_just_pressed("ui_right") and direction == -1:
+		if !parent.ceiling_cast.is_colliding():
+			return move_state #exit state 
+	return null
 	
 
 func process_physics(delta: float) -> State:
@@ -41,7 +48,10 @@ func process_physics(delta: float) -> State:
 		return jump_state #return jump state 
 		
 	
-	if parent.ceiling_cast.is_colliding():
+	if parent.is_damaged:
+		return stagger_state
+	
+	if parent.ceiling_cast.is_colliding(): #if the ceiling cast detects a ceiling 
 		return slide_state
 		
 	return null #if nothing happens return nothing
@@ -49,3 +59,4 @@ func process_physics(delta: float) -> State:
 func exit() -> void:
 	parent.slide_collision.set_deferred("disabled", true) 
 	parent.normal_collision.set_deferred("disabled", false)
+	parent.is_sliding = false

@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://4frha854n2bc"]
+
+[ext_resource type="PackedScene" uid="uid://br6kjkwotfs8l" path="res://OtherScenes/bullet.tscn" id="1_g2o52"]
+[ext_resource type="Texture2D" uid="uid://cxhqarfg45i8x" path="res://Sprites/ChargedMegaBuster2.png" id="2_pqnt6"]
+[ext_resource type="Script" path="res://OtherScenes/charged_lemon_2.gd" id="2_x0n46"]
+
+[sub_resource type="Animation" id="Animation_0fp80"]
+resource_name = "fire"
+length = 0.14
+loop_mode = 1
+step = 0.04
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_e5mm1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_71swm"]
+_data = {
+"RESET": SubResource("Animation_e5mm1"),
+"fire": SubResource("Animation_0fp80")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_houny"]
+size = Vector2(21.5, 21.5)
+
+[node name="ChargedLemon2" instance=ExtResource("1_g2o52")]
+script = ExtResource("2_x0n46")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_pqnt6")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" index="0"]
+autoplay = "fire"
+libraries = {
+"": SubResource("AnimationLibrary_71swm")
+}
+
+[node name="HitBoxComponent" parent="." index="2"]
+collision_mask = 16
+damage = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent" index="0"]
+position = Vector2(5.25, 0.25)
+shape = SubResource("RectangleShape2D_houny")
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="3"]
+position = Vector2(0.5, 6.85453e-07)
+scale = Vector2(1.55, 1.5)

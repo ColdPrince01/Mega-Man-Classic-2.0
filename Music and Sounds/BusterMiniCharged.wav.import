@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bs05nfwgy3nvo"
+path="res://.godot/imported/BusterMiniCharged.wav-c98f591b80da91b554e6fc7fa282c1d4.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/BusterMiniCharged.wav"
+dest_files=["res://.godot/imported/BusterMiniCharged.wav-c98f591b80da91b554e6fc7fa282c1d4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

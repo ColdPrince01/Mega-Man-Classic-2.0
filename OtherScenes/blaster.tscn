@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkw5i7hlmcdi0"]
+
+[ext_resource type="Script" path="res://Blaster.gd" id="1_agi5t"]
+
+[node name="Blaster" type="Node2D"]
+script = ExtResource("1_agi5t")
+
+[node name="ShootPos" type="Marker2D" parent="."]

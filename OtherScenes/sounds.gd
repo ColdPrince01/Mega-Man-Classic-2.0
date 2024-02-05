@@ -15,6 +15,7 @@ var sounds_path = "res://Music and Sounds/"
 @export var pause: AudioStream
 
 
+
 @onready var sound_players = get_children() #variable for getting the audio players in the scene 
 
 func play(sound_stream, pitch_scale = 1.0, volume_db = 0.0):

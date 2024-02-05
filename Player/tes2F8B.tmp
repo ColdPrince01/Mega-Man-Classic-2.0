@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dej8dwa6y3t55"]
+[gd_scene load_steps=45 format=3 uid="uid://dej8dwa6y3t55"]
 
 [ext_resource type="Script" path="res://TestPlayer.gd" id="1_8ai5p"]
 [ext_resource type="Texture2D" uid="uid://b17p26md36ty6" path="res://Sprites/MegaMan.png" id="2_7lkew"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://Player/MovementComponent.gd" id="10_43urb"]
 [ext_resource type="Script" path="res://Player/Stagger.gd" id="10_kcqog"]
 [ext_resource type="PackedScene" uid="uid://b1xjd73y6tlek" path="res://OtherScenes/hurt_box_component.tscn" id="11_1n3va"]
+[ext_resource type="Script" path="res://Player/IdleShoot.gd" id="11_1nknh"]
+[ext_resource type="Script" path="res://Player/MoveShoot.gd" id="12_iwe3u"]
 [ext_resource type="Texture2D" uid="uid://cvk6gcuyr6dem" path="res://Sprites/Damage.png" id="12_sw2ei"]
 [ext_resource type="Texture2D" uid="uid://dckn4ao5hfwn7" path="res://Sprites/SlideDust.png" id="13_0ycfq"]
 
@@ -286,6 +288,32 @@ gravity = 900
 max_fall_speed = 360
 slide_speed = 160.0
 
+[sub_resource type="Resource" id="Resource_8be3t"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
+
+[sub_resource type="Resource" id="Resource_ty43q"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vq8fb"]
 size = Vector2(10, 20)
 
@@ -469,22 +497,24 @@ position = Vector2(0, 0)
 [node name="StateMachine" parent="." node_paths=PackedStringArray("init_state") instance=ExtResource("3_yn72c")]
 init_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("jump_state", "move_state", "slide_state", "stagger_state", "idle_state")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("jump_state", "move_state", "slide_state", "stagger_state", "idle_state", "idle_shoot_state")]
 script = ExtResource("4_rsn1g")
 jump_state = NodePath("../Jump")
 move_state = NodePath("../Move")
 slide_state = NodePath("../Slide")
 stagger_state = NodePath("../Stagger")
 idle_state = NodePath(".")
+idle_shoot_state = NodePath("../IdleShoot")
 movement_data = SubResource("Resource_ltdcr")
 animation_name = "idle"
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state", "slide_state", "stagger_state")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state", "slide_state", "stagger_state", "move_shoot_state")]
 script = ExtResource("6_sbura")
 idle_state = NodePath("../Idle")
 jump_state = NodePath("../Jump")
 slide_state = NodePath("../Slide")
 stagger_state = NodePath("../Stagger")
+move_shoot_state = NodePath("../MoveShoot")
 movement_data = SubResource("Resource_2hbsh")
 animation_name = "run"
 
@@ -514,6 +544,25 @@ move_state = NodePath("../Move")
 jump_state = NodePath("../Jump")
 movement_data = SubResource("Resource_wekm2")
 animation_name = "damaged"
+
+[node name="IdleShoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "move_shoot_state", "stagger_state")]
+script = ExtResource("11_1nknh")
+idle_state = NodePath("../Idle")
+move_shoot_state = NodePath("../MoveShoot")
+stagger_state = NodePath("../Stagger")
+movement_data = SubResource("Resource_8be3t")
+animation_name = "idle_shoot"
+
+[node name="MoveShoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("move_state", "idle_shoot_state", "idle_state", "stagger_state", "slide_state", "jump_state")]
+script = ExtResource("12_iwe3u")
+move_state = NodePath("../Move")
+idle_shoot_state = NodePath("../IdleShoot")
+idle_state = NodePath("../Idle")
+stagger_state = NodePath("../Stagger")
+slide_state = NodePath("../Slide")
+jump_state = NodePath("../Jump")
+movement_data = SubResource("Resource_ty43q")
+animation_name = "shooting_walk"
 
 [node name="MovementComponent" type="Node" parent="."]
 script = ExtResource("10_43urb")
@@ -563,15 +612,5 @@ libraries = {
 
 [node name="mega_pos" type="Marker2D" parent="."]
 position = Vector2(21, -1)
-
-[node name="FireRate" type="Timer" parent="."]
-wait_time = 0.12
-one_shot = true
-
-[node name="ShootAnimTimer" type="Timer" parent="."]
-wait_time = 0.32
-one_shot = true
-
-[node name="Timer" type="Timer" parent="."]
 
 [connection signal="hurt" from="HurtBoxComponent" to="." method="_on_hurt_box_component_hurt"]

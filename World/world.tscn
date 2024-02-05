@@ -9,7 +9,7 @@
 script = ExtResource("1_o5m11")
 
 [node name="TestPlayer" parent="." instance=ExtResource("4_wnu5d")]
-position = Vector2(162, 119)
+position = Vector2(137, 159)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -18,5 +18,7 @@ offset_left = 4.0
 offset_top = 3.0
 offset_right = 4.0
 offset_bottom = 3.0
+metadata/_edit_lock_ = true
 
 [node name="GalaxyManLevel" parent="." instance=ExtResource("4_mm6ay")]
+metadata/_edit_lock_ = true

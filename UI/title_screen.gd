@@ -20,7 +20,6 @@ func _ready():
 	await title_screen_2.animation_finished
 	big_mega_man_2.play("fade_in")
 	await big_mega_man_2.animation_finished
-	v_box_container.set_visible(true)
 	start_blink.play("fade_in")
 	quit_blink.play("fade_in")
 	await quit_blink.animation_finished

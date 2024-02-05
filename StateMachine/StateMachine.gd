@@ -2,22 +2,23 @@ class_name State
 extends Node
 
 
-signal Transitioned #signal for transitioning between states 
-
 #a script made for the purpose of compartmentalizing aspects of the code in order to handle the character's various states 
 @export var movement_data : PlayerMovementData
 @export var animation_name : String
 
+signal shot_fired
 
 var parent: Player #variable parent is set to the player class bodies
 var move_component
+var state_velocity = Vector2()
+
 
 #first method called when the state enters the scene, any properties passed in here will carry over to any relevant method that requires it 
 func enter() -> void:
 	parent.character_animator.play(animation_name) #upon entering scene, state will play animation name 
 	
 	
-
+#function called when the state is exited, last function called 
 func exit() -> void:
 	pass
 	
@@ -32,7 +33,7 @@ func process_frame(delta: float) -> State:
 	return null
 	
 
-
+#function for processing, tied to physics frames 
 func process_physics(delta: float) -> State:
 	return null
 
