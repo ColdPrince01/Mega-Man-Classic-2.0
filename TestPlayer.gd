@@ -9,13 +9,12 @@ const LemonBullet = preload("res://OtherScenes/PlayerLemon.tscn")
 const ChargedLemon2 = preload("res://OtherScenes/charged_lemon_2.tscn")
 const CHARGE_MEGABUSTER_START = 0.6
 const FULLY_CHARGED_BUSTER_TIME = 1.6
-
+const MAX_LEMONS = 3
 
 @onready var character_animator = $CharacterAnimator
 @onready var mega_man_sprite = $MegaManSprite
 @onready var state_machine = $StateMachine
 @onready var movement_component = $MovementComponent
-@onready var camera_2d = $Camera2D
 @onready var normal_collision = $NormalCollision
 @onready var slide_collision = $SlideCollision
 @onready var ceiling_cast = $CeilingCast
@@ -29,6 +28,7 @@ const FULLY_CHARGED_BUSTER_TIME = 1.6
 @onready var mega_pos = $mega_pos
 @onready var fire_rate = $FireRate
 @onready var shoot_anim_timer = $ShootAnimTimer
+@onready var collision_shape_2d = $RoomDetector/CollisionShape2D
 
 
 var is_damaged := false
@@ -37,8 +37,14 @@ var is_jumping := false
 var attack_hold_time = 0 #increases as attack button is pressed; used for charging mega buster
 var mega_charge_lvl = 0
 
+
 var input_direction = Input.get_axis("ui_left","ui_right")
 
+func _enter_tree():
+	MainInstances.player = self
+
+func _exit_tree():
+	MainInstances.player = null
 
 func _ready() -> void:
 	# Initialize the state machine, passing a reference of the player to the states,
@@ -52,17 +58,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		Engine.time_scale = 0.1
 	else:
 		Engine.time_scale = 1.0
+	
+
 
 
 func _physics_process(delta: float) -> void:
-	state_machine.process_physics(delta)
+	if !Global.room_pause:
+		state_machine.process_physics(delta)
+	
+	
 
 
 func _process(delta: float) -> void:
 	state_machine.process_frame(delta)
 	attack_hold_check(delta)
 	get_buster_lvl()
-	print(mega_charge_lvl)
+	
 
 
 
@@ -107,7 +118,7 @@ func get_buster_lvl(): #gets mega buster lvl for charged shot
 
 func attack_hold_check(delta): #Checks for if player is holding shoot button
 	if Input.is_action_pressed("Fire") and fire_rate.time_left <= 0.0: #if player holds down shoot button
-		if is_sliding or is_damaged: return #and they aren't sliding or damaged
+		if is_damaged: return #and they aren't sliding or damaged
 		attack_hold_time += delta #increase the charge hold time every second
 	else:
 		attack_hold_time = 0.0
@@ -147,3 +158,11 @@ func death():
 	#temp death functionality 
 	Utils.instantiate_scene_on_world(ExplosionEffectScene, global_position + Vector2(0,-7))
 	queue_free()
+
+
+func _on_room_detector_area_entered(area : Area2D):
+	var collision_shape: CollisionShape2D = area.get_node("CollisionShape2D")
+	var size : Vector2 = collision_shape.shape.extents * 2 #variable size set equal to the extents of the shape of the collision shape times 2
+	
+	#changes camera's current room and size. 
+	Global.change_room(collision_shape.global_position, size)

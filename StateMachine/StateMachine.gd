@@ -13,6 +13,7 @@ var move_component
 var state_velocity = Vector2()
 
 
+
 #first method called when the state enters the scene, any properties passed in here will carry over to any relevant method that requires it 
 func enter() -> void:
 	parent.character_animator.play(animation_name) #upon entering scene, state will play animation name 

@@ -10,6 +10,8 @@ extends State
 
 var direction := 1
 var slide_timer := 0.0
+var timer_paused := false
+
 
 
 func enter() -> void:
@@ -35,7 +37,7 @@ func process_input(event: InputEvent) -> State:
 	
 
 func process_physics(delta: float) -> State:
-	slide_timer -= delta #decrease slide_timer value every second
+	if timer_paused == false: slide_timer -= delta #decrease slide_timer value every second
 	if slide_timer <= 0.0:
 		if get_movement_input() !=0:
 			return move_state
@@ -52,11 +54,26 @@ func process_physics(delta: float) -> State:
 		return stagger_state
 	
 	if parent.ceiling_cast.is_colliding(): #if the ceiling cast detects a ceiling 
-		return slide_state
-		
+		timer_paused = true #stop counting down slide_timer
+	else: #otherwise
+		timer_paused = false #the timer should keep counting down
 	return null #if nothing happens return nothing
 
-func exit() -> void:
+func exit():
 	parent.slide_collision.set_deferred("disabled", true) 
 	parent.normal_collision.set_deferred("disabled", false)
 	parent.is_sliding = false
+	if parent.mega_charge_lvl > 0:
+		if not parent.attack_hold_time > 0.0:
+			if parent.mega_charge_lvl == 1:
+				parent.character_animator.play("idle_shoot") #play the idle shoot animation if fire is pressed
+				parent.shoot_anim_timer.start() #Animation timer set to play shoot animation
+				parent.fire_charged_bullet_one()
+				parent.attack_hold_time = 0.0
+				parent.mega_charge_lvl = 0
+			if parent.mega_charge_lvl == 2:
+				parent.character_animator.play("idle_shoot") #play the idle shoot animation if fire is pressed
+				parent.shoot_anim_timer.start() #Animation timer set to play shoot animation
+				parent.fire_charged_bullet_two()
+				parent.attack_hold_time = 0.0
+				parent.mega_charge_lvl = 0

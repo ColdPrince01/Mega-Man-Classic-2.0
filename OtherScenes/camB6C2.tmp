@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://e8tyv6nw01dw"]
+
+[ext_resource type="Script" path="res://OtherScenes/camera_2d.gd" id="1_x8yxw"]
+
+[node name="Camera2D" type="Camera2D"]
+position = Vector2(0, -28)
+process_callback = 0
+script = ExtResource("1_x8yxw")
+
+[node name="ScreenShake" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ScreenShake" to="." method="_on_screen_shake_timeout"]

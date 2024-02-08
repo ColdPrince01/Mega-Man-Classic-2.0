@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://ynlxqfcx2svh"]
+
+[ext_resource type="Script" path="res://ScreenTransitor.gd" id="1_fnahj"]
+
+[sub_resource type="Theme" id="Theme_vd8ga"]
+
+[sub_resource type="Theme" id="Theme_c5ign"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2su3"]
+
+[node name="ScreenTransitor" type="Panel"]
+theme = SubResource("Theme_vd8ga")
+script = ExtResource("1_fnahj")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 51.0
+offset_bottom = 11.0
+theme = SubResource("Theme_c5ign")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Transit"
+
+[node name="Detector" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+position = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_n2su3")
+
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

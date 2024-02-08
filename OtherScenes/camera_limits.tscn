@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cwk5un35atwks"]
+[gd_scene load_steps=4 format=3 uid="uid://cwk5un35atwks"]
 
 [ext_resource type="Script" path="res://OtherScenes/camera_limits.gd" id="1_i5o06"]
 
@@ -10,6 +10,8 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.329412, 0.647059, 0.972549, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_37hqd"]
 
 [node name="CameraLimits" type="Panel"]
 custom_minimum_size = Vector2(320, 180)
@@ -26,3 +28,14 @@ offset_right = 45.0
 offset_bottom = 14.0
 theme_override_colors/font_color = Color(0, 0.52549, 0.729412, 1)
 text = "View"
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+position = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_37hqd")
+
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_area_2d_body_exited"]

@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/PlayerMovementData.gd" id="5_kjbax"]
 [ext_resource type="Script" path="res://StateMachine/JumpState.gd" id="6_aumog"]
 [ext_resource type="Script" path="res://Player/Move.gd" id="6_sbura"]
+[ext_resource type="PackedScene" uid="uid://e8tyv6nw01dw" path="res://OtherScenes/camera_2d.tscn" id="9_752fp"]
 [ext_resource type="Script" path="res://Player/Slide.gd" id="9_kiqhl"]
 [ext_resource type="Script" path="res://Player/MovementComponent.gd" id="10_43urb"]
 [ext_resource type="Script" path="res://Player/Stagger.gd" id="10_kcqog"]
@@ -436,12 +437,8 @@ _data = {
 "invincibility": SubResource("Animation_xnnm0")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lhfi2"]
-size = Vector2(0, 0)
-
 [node name="TestPlayer" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 65
 script = ExtResource("1_8ai5p")
 movement_data = SubResource("Resource_tk04i")
 
@@ -465,6 +462,9 @@ position = Vector2(0, 8)
 scale = Vector2(2, 0.5)
 shape = SubResource("RectangleShape2D_46gj7")
 disabled = true
+
+[node name="Camera2D" parent="." instance=ExtResource("9_752fp")]
+position = Vector2(0, 0)
 
 [node name="StateMachine" parent="." node_paths=PackedStringArray("init_state") instance=ExtResource("3_yn72c")]
 init_state = NodePath("Idle")
@@ -576,13 +576,4 @@ one_shot = true
 
 [node name="ChargeFlash" type="AnimationPlayer" parent="."]
 
-[node name="RoomDetector" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 64
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomDetector"]
-position = Vector2(0, 3)
-shape = SubResource("RectangleShape2D_lhfi2")
-
 [connection signal="hurt" from="HurtBoxComponent" to="." method="_on_hurt_box_component_hurt"]
-[connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]

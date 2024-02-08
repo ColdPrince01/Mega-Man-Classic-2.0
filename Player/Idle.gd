@@ -35,7 +35,6 @@ func process_input(event: InputEvent) -> State:
 		parent.shoot_anim_timer.start() #Animation timer set to play shoot animation
 		parent.fire_bullet() #fire the bullet
 	if Input.is_action_just_released("Fire"):
-		PlayerSounds.stop(PlayerSounds.buster_charging)
 		if parent.mega_charge_lvl == 1:
 			parent.character_animator.play("idle_shoot") #play the idle shoot animation if fire is pressed
 			parent.shoot_anim_timer.start() #Animation timer set to play shoot animation
@@ -58,14 +57,17 @@ func process_physics(delta: float) -> State:
 	parent.velocity.y += movement_data.gravity * delta #at every physics step apply gravity
 	parent.move_and_slide() #call move_and_slide after
 	
+	if parent.is_damaged: #this has to be before the other state checks (idk why)
+		print("idle stagger")
+		return stagger_state
+	
 	if parent.shoot_anim_timer.time_left > 0.0: #while there's time left on the timer 
 		parent.character_animator.play("idle_shoot") #play the idle shoot animation
 	
 	if parent.shoot_anim_timer.time_left <= 0.0: #if there is no time left on the animation timer
 		return idle_state #return to idle animation
 	
-	if parent.is_damaged:
-		return stagger_state
+
 	
 	
 	if !parent.is_on_floor() and parent.velocity.y > 0.0: #if parent is not on floor and is falling

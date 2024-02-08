@@ -23,6 +23,8 @@ PlayerStats="*res://Player/player_stats.tscn"
 Sounds="*res://OtherScenes/sounds.tscn"
 EventTransitions="*res://OtherScenes/event_transitions.tscn"
 PlayerSounds="*res://OtherScenes/player_sounds.tscn"
+MainInstances="*res://Scripts/MainInstances.gd"
+Global="*res://World/Global.gd"
 
 [display]
 
