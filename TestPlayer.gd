@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 @export var movement_data : PlayerMovementData
 
+
 const ChargedLemon = preload("res://OtherScenes/charged_lemon_1.tscn")
 const ExplosionEffectScene = preload("res://OtherScenes/explosion_effect.tscn")
 const LemonBullet = preload("res://OtherScenes/PlayerLemon.tscn")
