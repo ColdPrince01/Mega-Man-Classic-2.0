@@ -5,13 +5,15 @@ class_name MoveState
 @export var jump_state : State
 @export var slide_state : State 
 @export var stagger_state : State
+@export var climb_state : State
+@export var move_state : State
 
 var current_animation_pos: float #variable for grabbing the current animation
 
 func process_input(event: InputEvent) -> State:
 	if Input.is_action_pressed("ui_left") and Input.is_action_pressed("ui_right"):
 		return idle_state
-	if Input.is_action_just_pressed("ui_up") and parent.is_on_floor(): #if jump button pressed and parent is on floor
+	if Input.is_action_just_pressed("ui_accept") and parent.is_on_floor(): #if jump button pressed and parent is on floor
 		return jump_state
 	if Input.is_action_pressed("ui_down"):
 		if Input.is_action_just_pressed("slide") and parent.is_on_floor():
@@ -44,6 +46,9 @@ func process_input(event: InputEvent) -> State:
 		else:
 			return null
 	
+	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
+		if parent.can_climb == true:
+			return climb_state
 	
 	return null
 

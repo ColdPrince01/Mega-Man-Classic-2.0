@@ -243,7 +243,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.6),
 "transitions": PackedFloat32Array(1.10957, 1.07177),
 "update": 0,
-"values": [Vector2(-107, 28.5), Vector2(165, 28.5)]
+"values": [Vector2(-107, 28.5), Vector2(128, 29)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7xntd"]
@@ -343,17 +343,17 @@ libraries = {
 [node name="BigMegaMan" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
 z_index = 4
-position = Vector2(268, 110)
+position = Vector2(220, 110)
 scale = Vector2(0.788889, 0.788889)
 texture = ExtResource("2_can4x")
 
 [node name="Label" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 67.0
-offset_top = 150.0
-offset_right = 421.0
-offset_bottom = 195.0
+offset_left = 43.0
+offset_top = 145.0
+offset_right = 397.0
+offset_bottom = 190.0
 theme = ExtResource("3_ta5va")
 text = "@capcom co. , ltd
 2008 all rights reserved."

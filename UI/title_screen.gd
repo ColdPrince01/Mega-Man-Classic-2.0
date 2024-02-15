@@ -8,6 +8,8 @@ extends ColorRect
 @onready var label = $Node/Label
 @onready var bg_effects = $BGEffects
 @onready var v_box_container = $Buttons/VBoxContainer
+@onready var start = $Buttons/VBoxContainer/Start
+@onready var quit = $Buttons/VBoxContainer/Quit
 
 func _ready():
 	RenderingServer.set_default_clear_color(Color.BLACK)
@@ -24,13 +26,16 @@ func _ready():
 	quit_blink.play("fade_in")
 	await quit_blink.animation_finished
 	bg_effects.set_emitting(true)
+	quit.grab_focus()
+	start.grab_focus()
 
 
 func _process(delta):
 	pass
 
 func _on_start_pressed():
-	pass
+	await ScreenTransition.fade_in()
+	get_tree().change_scene_to_file("res://World/world.tscn")
 	
 
 func _on_quit_pressed():

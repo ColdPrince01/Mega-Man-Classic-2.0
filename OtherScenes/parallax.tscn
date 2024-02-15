@@ -13,7 +13,20 @@ metadata/_edit_lock_ = true
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 scroll_ignore_camera_zoom = true
 
+[node name="BGEffects" type="CPUParticles2D" parent="ParallaxBackground"]
+position = Vector2(320, 88)
+amount = 50
+lifetime = 6.0
+emission_shape = 3
+emission_rect_extents = Vector2(1, 90)
+direction = Vector2(-1, 0)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 150.0
+
 [node name="Stars" type="ParallaxLayer" parent="ParallaxBackground"]
+visible = false
 motion_scale = Vector2(0, 0)
 motion_mirroring = Vector2(320, 0)
 script = ExtResource("1_v7geo")
@@ -32,7 +45,7 @@ asteroid_speed = -12.5
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/AsteroidBelt"]
-position = Vector2(160, 196)
+position = Vector2(160, 120)
 texture = ExtResource("3_ulxyd")
 
 [node name="Planets" type="ParallaxLayer" parent="ParallaxBackground"]

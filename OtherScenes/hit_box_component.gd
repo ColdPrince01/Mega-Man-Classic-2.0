@@ -3,7 +3,7 @@ extends Area2D
 
 #reminder to set layer/mask whenever this component is added to a node
 
-@export var damage = 1 #editable damage value 
+@export var damage = PlayerStats.max_health #editable damage value 
 
 
 

@@ -4,6 +4,7 @@ extends Node
 #Set as singleton to be accessed globally throughout the project
 var sounds_path = "res://Music and Sounds/"
 
+@export var appear : AudioStream
 @export var death : AudioStream
 @export var enemy_bullet : AudioStream
 @export var enemy_deflect : AudioStream
@@ -13,8 +14,9 @@ var sounds_path = "res://Music and Sounds/"
 @export var lemon_bullet : AudioStream
 @export var menu_focus : AudioStream
 @export var pause: AudioStream
-
-
+@export var death_sound : AudioStream
+@export var buster_fully_charged : AudioStream
+@export var buster_mini_charged : AudioStream
 
 @onready var sound_players = get_children() #variable for getting the audio players in the scene 
 

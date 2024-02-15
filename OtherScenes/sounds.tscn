@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4042yeimtjii"]
+[gd_scene load_steps=15 format=3 uid="uid://c4042yeimtjii"]
 
 [ext_resource type="Script" path="res://OtherScenes/sounds.gd" id="1_icp0n"]
+[ext_resource type="AudioStream" uid="uid://bl4swh42b1gre" path="res://Music and Sounds/Appear.wav" id="2_4yxhi"]
 [ext_resource type="AudioStream" uid="uid://f5ji7g7uekdx" path="res://Music and Sounds/death.wav" id="2_mu8xl"]
 [ext_resource type="AudioStream" uid="uid://co6fx6omk61f4" path="res://Music and Sounds/enemybullet.wav" id="3_e2uss"]
 [ext_resource type="AudioStream" uid="uid://bkgieadheilpw" path="res://Music and Sounds/enemydeflect.wav" id="4_kxg3j"]
@@ -10,9 +11,13 @@
 [ext_resource type="AudioStream" uid="uid://vuj4wscjoei0" path="res://Music and Sounds/lemonbullet.wav" id="8_g7wdw"]
 [ext_resource type="AudioStream" uid="uid://bve5phffd7wuv" path="res://Music and Sounds/menufocus.wav" id="9_ul3vy"]
 [ext_resource type="AudioStream" uid="uid://pk10ffdsc1bw" path="res://Music and Sounds/pause.wav" id="10_e31nl"]
+[ext_resource type="AudioStream" uid="uid://d0bgrjhl8m227" path="res://Music and Sounds/Died.wav" id="11_sdlbj"]
+[ext_resource type="AudioStream" uid="uid://d2l4usw75qa5i" path="res://Music and Sounds/BusterFullyCharged.wav" id="12_j7ndg"]
+[ext_resource type="AudioStream" uid="uid://bs05nfwgy3nvo" path="res://Music and Sounds/BusterMiniCharged.wav" id="13_baedt"]
 
 [node name="Sounds" type="Node"]
 script = ExtResource("1_icp0n")
+appear = ExtResource("2_4yxhi")
 death = ExtResource("2_mu8xl")
 enemy_bullet = ExtResource("3_e2uss")
 enemy_deflect = ExtResource("4_kxg3j")
@@ -22,6 +27,9 @@ land = ExtResource("7_lt584")
 lemon_bullet = ExtResource("8_g7wdw")
 menu_focus = ExtResource("9_ul3vy")
 pause = ExtResource("10_e31nl")
+death_sound = ExtResource("11_sdlbj")
+buster_fully_charged = ExtResource("12_j7ndg")
+buster_mini_charged = ExtResource("13_baedt")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 bus = &"Sounds"

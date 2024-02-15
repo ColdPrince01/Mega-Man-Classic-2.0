@@ -12,6 +12,7 @@ var velocity: Vector2
 
 func enter() -> void:
 	super()
+	Sounds.play(Sounds.hurt)
 	parent.damage_flash.play("invincibility")
 	print("damage begin")
 
@@ -34,3 +35,4 @@ func process_physics(delta: float) -> State:
 
 func exit() -> void:
 	parent.velocity.y = 0.0 #on exit the player's velocity on x-axis will be reset 
+	parent.is_climbing = false

@@ -3,6 +3,8 @@ extends State
 @export var idle_state: State
 @export var move_state: State
 @export var stagger_state : State
+@export var climb_state : State
+@export var jump_state : State
 
 @export var buster_pos := Vector2(20, -1)
 
@@ -16,7 +18,7 @@ func enter() -> void:
 
 func process_input(event: InputEvent) -> State:
 	if not parent.is_on_floor():
-		if Input.is_action_just_released("ui_up") and parent.velocity.y < 0.0: #for when the jump button is released
+		if Input.is_action_just_released("ui_accept") and parent.velocity.y < 0.0: #for when the jump button is released
 			parent.velocity.y = -movement_data.jump_velocity / 10 #lowers jump to 1/10th of its typical trajectory 
 	if Input.is_action_just_pressed("Fire") and parent.fire_rate.time_left <= 0.0:
 		print(parent.mega_pos.global_position)
@@ -39,7 +41,9 @@ func process_input(event: InputEvent) -> State:
 			parent.mega_charge_lvl = 0
 		else:
 			return null
-	
+	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
+		if parent.can_climb == true:
+			return climb_state
 	return null
 
 
@@ -70,7 +74,8 @@ func process_physics(delta: float) -> State:
 
 
 func exit() -> void:
-	Sounds.play(Sounds.land)
+	if parent.is_on_floor():
+		Sounds.play(Sounds.land)
 	parent.mega_pos.position = buster_pos
 
 

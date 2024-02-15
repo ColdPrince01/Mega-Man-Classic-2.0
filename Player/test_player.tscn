@@ -1,18 +1,21 @@
-[gd_scene load_steps=41 format=3 uid="uid://dej8dwa6y3t55"]
+[gd_scene load_steps=52 format=3 uid="uid://dej8dwa6y3t55"]
 
 [ext_resource type="Script" path="res://TestPlayer.gd" id="1_8ai5p"]
 [ext_resource type="Texture2D" uid="uid://b17p26md36ty6" path="res://Sprites/MegaMan.png" id="2_7lkew"]
 [ext_resource type="PackedScene" uid="uid://cvebhfuo1xb35" path="res://StateMachine/state_machine.tscn" id="3_yn72c"]
 [ext_resource type="Script" path="res://Player/Idle.gd" id="4_rsn1g"]
+[ext_resource type="Script" path="res://Player/Spawn.gd" id="5_d8b8n"]
 [ext_resource type="Script" path="res://Scripts/PlayerMovementData.gd" id="5_kjbax"]
 [ext_resource type="Script" path="res://StateMachine/JumpState.gd" id="6_aumog"]
 [ext_resource type="Script" path="res://Player/Move.gd" id="6_sbura"]
 [ext_resource type="Script" path="res://Player/Slide.gd" id="9_kiqhl"]
 [ext_resource type="Script" path="res://Player/MovementComponent.gd" id="10_43urb"]
+[ext_resource type="Script" path="res://Player/Climb.gd" id="10_cmyfs"]
 [ext_resource type="Script" path="res://Player/Stagger.gd" id="10_kcqog"]
 [ext_resource type="PackedScene" uid="uid://b1xjd73y6tlek" path="res://OtherScenes/hurt_box_component.tscn" id="11_1n3va"]
 [ext_resource type="Texture2D" uid="uid://cvk6gcuyr6dem" path="res://Sprites/Damage.png" id="12_sw2ei"]
 [ext_resource type="Texture2D" uid="uid://dckn4ao5hfwn7" path="res://Sprites/SlideDust.png" id="13_0ycfq"]
+[ext_resource type="PackedScene" uid="uid://cg1or7f46o1mw" path="res://LevelScenes/effect_spawner.tscn" id="15_5hrw5"]
 
 [sub_resource type="Resource" id="Resource_tk04i"]
 script = ExtResource("5_kjbax")
@@ -26,6 +29,7 @@ air_acceleration = 200.0
 gravity = 900
 max_fall_speed = 360
 slide_speed = 160.0
+climb_speed = 78.0
 
 [sub_resource type="Animation" id="Animation_o7lvi"]
 length = 0.001
@@ -40,6 +44,66 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qgo5i"]
+resource_name = "climb_exit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
+}
+
+[sub_resource type="Animation" id="Animation_ptr4y"]
+resource_name = "climb_idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [15]
+}
+
+[sub_resource type="Animation" id="Animation_k2j65"]
+resource_name = "climb_move"
+length = 0.32
+loop_mode = 1
+step = 0.16
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [15, 16]
 }
 
 [sub_resource type="Animation" id="Animation_3uww2"]
@@ -205,6 +269,9 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_erlnu"]
 _data = {
 "RESET": SubResource("Animation_o7lvi"),
+"climb_exit": SubResource("Animation_qgo5i"),
+"climb_idle": SubResource("Animation_ptr4y"),
+"climb_move": SubResource("Animation_k2j65"),
 "damaged": SubResource("Animation_3uww2"),
 "idle": SubResource("Animation_2tiuv"),
 "idle_shoot": SubResource("Animation_s8io3"),
@@ -217,8 +284,122 @@ _data = {
 "tip_toe_shoot": SubResource("Animation_1la8a")
 }
 
+[sub_resource type="Animation" id="Animation_s1lrx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MegaManSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [604]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MegaManSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MegaManSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_okxhb"]
+resource_name = "teleport_in"
+length = 1.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MegaManSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.05, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [604, 605, 604, 606]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MegaManSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -512), Vector2(0, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"teleport_in"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MegaManSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tqubi"]
+_data = {
+"RESET": SubResource("Animation_s1lrx"),
+"teleport_in": SubResource("Animation_okxhb")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_46gj7"]
 size = Vector2(10, 20)
+
+[sub_resource type="Resource" id="Resource_bhrdd"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
+climb_speed = 78.0
 
 [sub_resource type="Resource" id="Resource_ltdcr"]
 script = ExtResource("5_kjbax")
@@ -232,6 +413,7 @@ air_acceleration = 200.0
 gravity = 900
 max_fall_speed = 360
 slide_speed = 160.0
+climb_speed = 78.0
 
 [sub_resource type="Resource" id="Resource_2hbsh"]
 script = ExtResource("5_kjbax")
@@ -245,6 +427,7 @@ air_acceleration = 200.0
 gravity = 900
 max_fall_speed = 360
 slide_speed = 160.0
+climb_speed = 78.0
 
 [sub_resource type="Resource" id="Resource_gagaf"]
 script = ExtResource("5_kjbax")
@@ -258,6 +441,7 @@ air_acceleration = 200.0
 gravity = 900
 max_fall_speed = 360
 slide_speed = 160.0
+climb_speed = 78.0
 
 [sub_resource type="Resource" id="Resource_8te84"]
 script = ExtResource("5_kjbax")
@@ -271,6 +455,7 @@ air_acceleration = 200.0
 gravity = 900
 max_fall_speed = 360
 slide_speed = 160.0
+climb_speed = 78.0
 
 [sub_resource type="Resource" id="Resource_wekm2"]
 script = ExtResource("5_kjbax")
@@ -284,6 +469,21 @@ air_acceleration = 200.0
 gravity = 900
 max_fall_speed = 360
 slide_speed = 160.0
+climb_speed = 78.0
+
+[sub_resource type="Resource" id="Resource_lfsk5"]
+script = ExtResource("5_kjbax")
+move_speed = 78.0
+acceleration = 600.0
+friction = 1000.0
+jump_velocity = 320.0
+gravity_scale = 1.0
+air_resistance = 200.0
+air_acceleration = 200.0
+gravity = 900
+max_fall_speed = 360
+slide_speed = 160.0
+climb_speed = 78.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vq8fb"]
 size = Vector2(10, 20)
@@ -439,22 +639,29 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lhfi2"]
 size = Vector2(0, 0)
 
-[node name="TestPlayer" type="CharacterBody2D"]
+[node name="TestPlayer" type="CharacterBody2D" groups=["Climbers"]]
 z_index = 4
 collision_layer = 2
 collision_mask = 65
 script = ExtResource("1_8ai5p")
 movement_data = SubResource("Resource_tk04i")
+death_time = 0.45
 
 [node name="MegaManSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_7lkew")
 hframes = 116
 vframes = 16
+frame = 604
 
 [node name="CharacterAnimator" type="AnimationPlayer" parent="."]
 root_node = NodePath("../MegaManSprite")
 libraries = {
 "": SubResource("AnimationLibrary_erlnu")
+}
+
+[node name="TeleportPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tqubi")
 }
 
 [node name="NormalCollision" type="CollisionShape2D" parent="."]
@@ -468,32 +675,44 @@ shape = SubResource("RectangleShape2D_46gj7")
 disabled = true
 
 [node name="StateMachine" parent="." node_paths=PackedStringArray("init_state") instance=ExtResource("3_yn72c")]
-init_state = NodePath("Idle")
+init_state = NodePath("Spawn")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("jump_state", "move_state", "slide_state", "stagger_state", "idle_state")]
+[node name="Spawn" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("5_d8b8n")
+idle_state = NodePath("../Idle")
+spawn_time = 1.15
+movement_data = SubResource("Resource_bhrdd")
+animation_name = "teleport_in"
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("jump_state", "move_state", "slide_state", "stagger_state", "idle_state", "climb_state")]
 script = ExtResource("4_rsn1g")
 jump_state = NodePath("../Jump")
 move_state = NodePath("../Move")
 slide_state = NodePath("../Slide")
 stagger_state = NodePath("../Stagger")
 idle_state = NodePath(".")
+climb_state = NodePath("../Climb")
 movement_data = SubResource("Resource_ltdcr")
 animation_name = "idle"
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state", "slide_state", "stagger_state")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state", "slide_state", "stagger_state", "climb_state", "move_state")]
 script = ExtResource("6_sbura")
 idle_state = NodePath("../Idle")
 jump_state = NodePath("../Jump")
 slide_state = NodePath("../Slide")
 stagger_state = NodePath("../Stagger")
+climb_state = NodePath("../Climb")
+move_state = NodePath(".")
 movement_data = SubResource("Resource_2hbsh")
 animation_name = "run"
 
-[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "move_state", "stagger_state")]
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "move_state", "stagger_state", "climb_state", "jump_state")]
 script = ExtResource("6_aumog")
 idle_state = NodePath("../Idle")
 move_state = NodePath("../Move")
 stagger_state = NodePath("../Stagger")
+climb_state = NodePath("../Climb")
+jump_state = NodePath(".")
 movement_data = SubResource("Resource_gagaf")
 animation_name = "jump"
 
@@ -515,6 +734,13 @@ move_state = NodePath("../Move")
 jump_state = NodePath("../Jump")
 movement_data = SubResource("Resource_wekm2")
 animation_name = "damaged"
+
+[node name="Climb" type="Node" parent="StateMachine" node_paths=PackedStringArray("jump_state", "idle_state")]
+script = ExtResource("10_cmyfs")
+jump_state = NodePath("../Jump")
+idle_state = NodePath("../Idle")
+movement_data = SubResource("Resource_lfsk5")
+animation_name = "climb_idle"
 
 [node name="MovementComponent" type="Node" parent="."]
 script = ExtResource("10_43urb")
@@ -584,6 +810,16 @@ collision_mask = 64
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RoomDetector"]
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_lhfi2")
+
+[node name="ClimbDetector" type="RayCast2D" parent="."]
+position = Vector2(0, -9)
+target_position = Vector2(0, 21)
+collision_mask = 128
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="EffectSpawner" parent="." instance=ExtResource("15_5hrw5")]
 
 [connection signal="hurt" from="HurtBoxComponent" to="." method="_on_hurt_box_component_hurt"]
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_room_detector_area_entered"]

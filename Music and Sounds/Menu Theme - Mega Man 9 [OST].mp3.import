@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://clevlhg1cdf2e"
+path="res://.godot/imported/Menu Theme - Mega Man 9 [OST].mp3-397dd653017a35a88c07402de8f8d5c8.mp3str"
+
+[deps]
+
+source_file="res://Music and Sounds/Menu Theme - Mega Man 9 [OST].mp3"
+dest_files=["res://.godot/imported/Menu Theme - Mega Man 9 [OST].mp3-397dd653017a35a88c07402de8f8d5c8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://lciten41fywq"
+path="res://.godot/imported/MegaBusterCharging.ogg-195d6ee7278ae2351c468448efff3b74.oggvorbisstr"
+
+[deps]
+
+source_file="res://Music and Sounds/MegaBusterCharging.ogg"
+dest_files=["res://.godot/imported/MegaBusterCharging.ogg-195d6ee7278ae2351c468448efff3b74.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

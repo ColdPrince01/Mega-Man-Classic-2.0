@@ -6,7 +6,7 @@ extends State
 @export var slide_state: State
 @export var stagger_state : State
 @export var idle_state : State
-
+@export var climb_state : State
 
 var input_direction = Input.get_axis("ui_left", "ui_right")
 
@@ -21,7 +21,7 @@ func enter() -> void:
 func process_input(event: InputEvent) -> State:
 	if Input.is_action_pressed("ui_left") and Input.is_action_pressed("ui_right"):
 		return idle_state
-	if Input.is_action_just_pressed("ui_up") and parent.is_on_floor():
+	if Input.is_action_just_pressed("ui_accept") and parent.is_on_floor():
 		return jump_state #return jump state if jump key is pressed and is on ground
 	if Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"):
 		return move_state #return move state is left or right key is pressed
@@ -50,12 +50,19 @@ func process_input(event: InputEvent) -> State:
 		else:
 			return null
 	
+	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
+		if parent.can_climb:
+			return climb_state
+	
 	return null #return nothing if no input is recieved
 	
 
 func process_physics(delta: float) -> State:
 	parent.velocity.y += movement_data.gravity * delta #at every physics step apply gravity
 	parent.move_and_slide() #call move_and_slide after
+	
+	if parent.velocity.y != 0:
+		return jump_state
 	
 	if parent.is_damaged: #this has to be before the other state checks (idk why)
 		print("idle stagger")

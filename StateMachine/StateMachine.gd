@@ -11,7 +11,7 @@ signal shot_fired
 var parent: Player #variable parent is set to the player class bodies
 var move_component
 var state_velocity = Vector2()
-
+var active := false : set = set_active #variable for setting whether the state machine is active or not
 
 
 #first method called when the state enters the scene, any properties passed in here will carry over to any relevant method that requires it 
@@ -38,6 +38,10 @@ func process_frame(delta: float) -> State:
 func process_physics(delta: float) -> State:
 	return null
 
+func set_active(value: bool) -> void:
+	active = value
+	set_process(value)
+	set_process_input(value)
 
 func get_movement_input() -> float:
 	return move_component.get_movement_direction() #return the movement component obtaining player movement direction

@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyyeimpl8idgy"]
+
+[ext_resource type="Script" path="res://Music.gd" id="1_s1nwo"]
+[ext_resource type="AudioStream" uid="uid://cjxtgcryma81k" path="res://Music and Sounds/Mega Man 9 OST  Galaxy Man Stage Theme.mp3" id="2_u8utj"]
+[ext_resource type="AudioStream" uid="uid://cqp7rd43ja6g5" path="res://Music and Sounds/Mega Man 9 OST_ Game Over.mp3" id="3_pyxst"]
+[ext_resource type="AudioStream" uid="uid://clevlhg1cdf2e" path="res://Music and Sounds/Menu Theme - Mega Man 9 [OST].mp3" id="4_b60a6"]
+
+[node name="Music" type="Node"]
+script = ExtResource("1_s1nwo")
+galaxy_man_theme = ExtResource("2_u8utj")
+game_over_theme = ExtResource("3_pyxst")
+menu_theme = ExtResource("4_b60a6")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

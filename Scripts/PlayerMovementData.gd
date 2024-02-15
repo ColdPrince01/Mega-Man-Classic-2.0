@@ -11,3 +11,4 @@ extends Resource
 @export var gravity = 900
 @export var max_fall_speed = 360
 @export var slide_speed = 160.0
+@export var climb_speed = 78.0

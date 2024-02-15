@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d0bgrjhl8m227"
+path="res://.godot/imported/Died.wav-d87af341a382d3021606920936fba28b.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/Died.wav"
+dest_files=["res://.godot/imported/Died.wav-d87af341a382d3021606920936fba28b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
