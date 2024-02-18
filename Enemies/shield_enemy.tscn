@@ -1,0 +1,172 @@
+[gd_scene load_steps=17 format=3 uid="uid://82dm0aelgppe"]
+
+[ext_resource type="Texture2D" uid="uid://ca11p0ext0wrk" path="res://Sprites/BigAssShield.png" id="1_i01oi"]
+[ext_resource type="Script" path="res://Enemies/shield_enemy.gd" id="1_sou6k"]
+[ext_resource type="PackedScene" uid="uid://b1xjd73y6tlek" path="res://OtherScenes/hurt_box_component.tscn" id="3_yv2cp"]
+[ext_resource type="PackedScene" uid="uid://cvnae2jand31t" path="res://OtherScenes/hit_box_component.tscn" id="4_sx6np"]
+[ext_resource type="PackedScene" uid="uid://k4ueou2ric1h" path="res://OtherScenes/stats.tscn" id="5_jklov"]
+
+[sub_resource type="Animation" id="Animation_vbra5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_jecyg"]
+resource_name = "flying"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_tc502"]
+resource_name = "turn_around"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 3, 2, 1, 0, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r4duc"]
+_data = {
+"RESET": SubResource("Animation_vbra5"),
+"flying": SubResource("Animation_jecyg"),
+"turn_around": SubResource("Animation_tc502")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d4hcs"]
+size = Vector2(17, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vhbet"]
+size = Vector2(4, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yjxfq"]
+size = Vector2(14, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8flq"]
+size = Vector2(6, 30)
+
+[sub_resource type="Animation" id="Animation_rit6g"]
+resource_name = "blink"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_fwoo0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d5hb3"]
+_data = {
+"RESET": SubResource("Animation_fwoo0"),
+"blink": SubResource("Animation_rit6g")
+}
+
+[node name="ShieldEnemy" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_sou6k")
+speed = 85.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_i01oi")
+hframes = 5
+frame = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "flying"
+libraries = {
+"": SubResource("AnimationLibrary_r4duc")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(4.5, 0)
+shape = SubResource("RectangleShape2D_d4hcs")
+
+[node name="HurtBoxComponent" parent="." instance=ExtResource("3_yv2cp")]
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_vhbet")
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("4_sx6np")]
+collision_mask = 8
+damage = 2
+
+[node name="HitCollision" type="CollisionShape2D" parent="HitBoxComponent"]
+position = Vector2(6, 0.5)
+shape = SubResource("RectangleShape2D_yjxfq")
+
+[node name="DeflectBox" parent="." instance=ExtResource("3_yv2cp")]
+
+[node name="DeflectCollision" type="CollisionShape2D" parent="DeflectBox"]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_b8flq")
+
+[node name="Stats" parent="." instance=ExtResource("5_jklov")]
+max_health = 8
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+position = Vector2(4.5, -2.38419e-07)
+scale = Vector2(0.95, 1.6)
+
+[node name="HurtFlicker" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_d5hb3")
+}
+
+[connection signal="hurt" from="HurtBoxComponent" to="." method="_on_hurt_box_component_hurt"]
+[connection signal="hurt" from="DeflectBox" to="." method="_on_deflect_box_hurt"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -34,6 +34,8 @@ func _process(delta):
 	pass
 
 func _on_start_pressed():
+	big_mega_man_2.play("tween_out")
+	await big_mega_man_2.animation_finished
 	await ScreenTransition.fade_in()
 	get_tree().change_scene_to_file("res://World/world.tscn")
 	

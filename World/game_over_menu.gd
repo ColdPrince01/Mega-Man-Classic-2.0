@@ -32,14 +32,17 @@ func _ready():
 
 
 func _on_quit_pressed():
+	await ScreenTransition.fade_in()
 	get_tree().quit()
 
 
 func _on_title_screen_pressed():
 	Music.stop()
+	await ScreenTransition.fade_in()
 	get_tree().change_scene_to_file("res://UI/title_screen.tscn")
 
 
 func _on_continue_pressed():
 	Music.stop()
+	await ScreenTransition.fade_in()
 	get_tree().change_scene_to_file("res://World/world.tscn")

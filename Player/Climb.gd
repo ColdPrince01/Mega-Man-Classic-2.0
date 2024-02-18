@@ -39,8 +39,13 @@ func process_physics(delta: float) -> State:
 		
 	elif !parent.can_climb and !parent.is_on_floor():
 		return jump_state
+	elif !parent.can_climb and parent.is_on_floor():
+		return idle_state
+	
 	else:
 		return idle_state
+		
+		
 	parent.move_and_slide()
 	if parent.is_on_floor():
 		return idle_state

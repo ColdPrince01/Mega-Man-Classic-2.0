@@ -8,7 +8,7 @@ const ChargedLemon = preload("res://OtherScenes/charged_lemon_1.tscn")
 const ExplosionEffectScene = preload("res://OtherScenes/explosion_effect.tscn")
 const LemonBullet = preload("res://OtherScenes/PlayerLemon.tscn")
 const ChargedLemon2 = preload("res://OtherScenes/charged_lemon_2.tscn")
-const CHARGE_MEGABUSTER_START = 0.6
+const CHARGE_MEGABUSTER_START = 0.68
 const FULLY_CHARGED_BUSTER_TIME = 1.6
 const MAX_LEMONS = 3
 
@@ -34,7 +34,9 @@ const MAX_LEMONS = 3
 @onready var effect_spawner = $EffectSpawner
 @onready var teleport_player = $TeleportPlayer
 @onready var room_detector = $RoomDetector
+@onready var camera_2d = $Camera2D
 
+@onready var ladder_scene = get_tree().current_scene.get_node("Ladder")
 
 
 var is_damaged := false
@@ -46,9 +48,11 @@ var can_climb := false
 var is_climbing := false
 var is_dead := false
 var player_ready := false : set = set_player_ready
+var on_spawn := false
 
 var input_direction = Input.get_axis("ui_left","ui_right")
 var vertical_direction = Input.get_axis("ui_up", "ui_down")
+
 
 func _enter_tree():
 	MainInstances.player = self
@@ -59,9 +63,12 @@ func _exit_tree():
 func _ready() -> void:
 	# Initialize the state machine, passing a reference of the player to the states,
 	# that way they can move and react accordingly
+	PlayerStats.set_health(PlayerStats.max_health)
 	state_machine.init(self, movement_component)
+	camera_2d.position_smoothing_enabled = false
 	PlayerStats.no_health.connect(death) #connect to death when the player dies 
-	Events.player_ready.emit(true)
+	await get_tree().create_timer(1.15).timeout
+	camera_2d.position_smoothing_enabled = true
 	set_player_ready(true)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -135,7 +142,7 @@ func slide_dust_instantiation():
 func get_buster_lvl(): #gets mega buster lvl for charged shot
 	if attack_hold_time > CHARGE_MEGABUSTER_START:
 		mega_charge_lvl = 1
-		PlayerSounds.play(PlayerSounds.buster_charging, 1.0, -5.0)
+		PlayerSounds.play(PlayerSounds.buster_charging, 1.0, 0.0)
 		
 	if attack_hold_time > FULLY_CHARGED_BUSTER_TIME:
 		mega_charge_lvl = 2
@@ -151,6 +158,7 @@ func buster_charge_audio(delta):
 func attack_hold_check(delta): #Checks for if player is holding shoot button
 	if Input.is_action_pressed("Fire") and fire_rate.time_left <= 0.0: #if player holds down shoot button
 		if is_damaged or is_dead: return #and they aren't sliding or damaged
+		if on_spawn == true: return
 		attack_hold_time += delta #increase the charge hold time every second
 	else:
 		attack_hold_time = 0.0
@@ -191,11 +199,14 @@ func death():
 	is_dead = true #sets variable for if the player is dead to true 
 	
 	#Screen Pause
+	camera_2d.position_smoothing_enabled = false
 	character_animator.play("damaged")
 	get_tree().paused = true
 	await(get_tree().create_timer(death_time).timeout) #creates a timer in the sceen tree and sets the wait time equal to "death_time"
 	get_tree().paused = false 
 	effect_spawner.spawn_death_particles(self.global_position)
+	var pos = self.global_position
+	camera_2d.reparent(get_tree().current_scene)
 	queue_free()
 	Events.player_died.emit()
 
@@ -209,7 +220,11 @@ func _on_room_detector_area_entered(area : Area2D):
 	var collision_shape: CollisionShape2D = area.get_node("CollisionShape2D")
 	var size : Vector2 = collision_shape.shape.extents * 2 #variable size set equal to the extents of the shape of the collision shape times 2
 	
-	#changes camera's current room and size. 
 	
-	Global.change_room(collision_shape.global_position, size)
-	print(collision_shape.shape.extents)
+	#changes camera's current room and size. 
+	camera_2d.limit_top = collision_shape.global_position.y - size.y/2
+	camera_2d.limit_left = collision_shape.global_position.x - size.x/2
+	camera_2d.limit_right = camera_2d.limit_left + size.x
+	camera_2d.limit_bottom = camera_2d.limit_top + size.y
+	
+	

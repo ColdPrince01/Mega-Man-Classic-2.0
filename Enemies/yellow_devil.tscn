@@ -1,0 +1,207 @@
+[gd_scene load_steps=20 format=3 uid="uid://yqiissmf5coo"]
+
+[ext_resource type="Script" path="res://Enemies/yellow_devil.gd" id="1_443y2"]
+[ext_resource type="Texture2D" uid="uid://do0fqngjfmsjn" path="res://Sprites/YellowDevil.png" id="1_i4utw"]
+[ext_resource type="PackedScene" uid="uid://b1xjd73y6tlek" path="res://OtherScenes/hurt_box_component.tscn" id="2_aulx6"]
+[ext_resource type="PackedScene" uid="uid://cvnae2jand31t" path="res://OtherScenes/hit_box_component.tscn" id="3_012tc"]
+[ext_resource type="Curve2D" uid="uid://dhntd4p7258cc" path="res://Enemies/Follow_side_curve.tres" id="4_kbgy0"]
+[ext_resource type="PackedScene" uid="uid://k4ueou2ric1h" path="res://OtherScenes/stats.tscn" id="6_2ng4x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pe6n"]
+size = Vector2(12, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2f08f"]
+size = Vector2(19, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qn4t"]
+size = Vector2(18, 18)
+
+[sub_resource type="Animation" id="Animation_p3yg0"]
+resource_name = "blink"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 1.3, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="Animation" id="Animation_6iu3v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4aspy"]
+_data = {
+"RESET": SubResource("Animation_6iu3v"),
+"blink": SubResource("Animation_p3yg0")
+}
+
+[sub_resource type="Animation" id="Animation_77e3g"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_dnywy"]
+resource_name = "follow_side"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2.5, 5)
+}
+
+[sub_resource type="Animation" id="Animation_wanx4"]
+resource_name = "follow_up"
+length = 5.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path2D/PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2.5, 5)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_44son"]
+_data = {
+"RESET": SubResource("Animation_77e3g"),
+"follow_side": SubResource("Animation_dnywy"),
+"follow_up": SubResource("Animation_wanx4")
+}
+
+[sub_resource type="Animation" id="Animation_fkcuh"]
+resource_name = "blink"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_kijyn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vmvaw"]
+_data = {
+"RESET": SubResource("Animation_kijyn"),
+"blink": SubResource("Animation_fkcuh")
+}
+
+[node name="YellowDevil" type="Node2D"]
+script = ExtResource("1_443y2")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
+texture = ExtResource("1_i4utw")
+hframes = 3
+
+[node name="CollisionBox" type="CollisionShape2D" parent="AnimatableBody2D"]
+shape = SubResource("RectangleShape2D_7pe6n")
+
+[node name="HurtBoxComponent" parent="AnimatableBody2D" instance=ExtResource("2_aulx6")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/HurtBoxComponent"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_2f08f")
+
+[node name="HitBoxComponent" parent="AnimatableBody2D" instance=ExtResource("3_012tc")]
+z_index = 9
+collision_mask = 8
+damage = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/HitBoxComponent"]
+shape = SubResource("RectangleShape2D_0qn4t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D"]
+autoplay = "blink"
+libraries = {
+"": SubResource("AnimationLibrary_4aspy")
+}
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = ExtResource("4_kbgy0")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Path2D/PathFollow2D"]
+remote_path = NodePath("../../../AnimatableBody2D")
+update_rotation = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "follow_side"
+libraries = {
+"": SubResource("AnimationLibrary_44son")
+}
+
+[node name="HurtFlicker" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vmvaw")
+}
+
+[node name="Stats" parent="." instance=ExtResource("6_2ng4x")]
+max_health = 5
+
+[connection signal="hurt" from="AnimatableBody2D/HurtBoxComponent" to="." method="_on_hurt_box_component_hurt"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]

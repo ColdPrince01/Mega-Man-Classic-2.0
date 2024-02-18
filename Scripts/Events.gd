@@ -8,3 +8,4 @@ signal transit_screen(direction, duration) #Signal for when a player has hit a s
 signal change_active(current_screen, new_screen)
 signal player_died
 signal player_ready(value)
+signal reflected()

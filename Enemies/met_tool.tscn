@@ -1,0 +1,126 @@
+[gd_scene load_steps=13 format=3 uid="uid://dhvrwhgdkffpb"]
+
+[ext_resource type="Script" path="res://Enemies/met_tool.gd" id="1_104fj"]
+[ext_resource type="PackedScene" uid="uid://b1xjd73y6tlek" path="res://OtherScenes/hurt_box_component.tscn" id="1_la2yr"]
+[ext_resource type="PackedScene" uid="uid://cvnae2jand31t" path="res://OtherScenes/hit_box_component.tscn" id="2_r6ste"]
+[ext_resource type="Texture2D" uid="uid://bgs742s5lghoo" path="res://Sprites/PopUpMettool-export.png" id="4_uqug5"]
+[ext_resource type="PackedScene" uid="uid://k4ueou2ric1h" path="res://OtherScenes/stats.tscn" id="5_3xuhj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqnl1"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aurvk"]
+size = Vector2(12, 14)
+
+[sub_resource type="Animation" id="Animation_lu83o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_i06w5"]
+resource_name = "closed"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_gnina"]
+resource_name = "open"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_di6dh"]
+_data = {
+"RESET": SubResource("Animation_lu83o"),
+"closed": SubResource("Animation_i06w5"),
+"open": SubResource("Animation_gnina")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhipi"]
+size = Vector2(10, 9.5)
+
+[node name="MetTool" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_104fj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("4_uqug5")
+hframes = 2
+frame = 1
+
+[node name="HurtBoxComponent" parent="." instance=ExtResource("1_la2yr")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_nqnl1")
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("2_r6ste")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_aurvk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_di6dh")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.75)
+shape = SubResource("RectangleShape2D_qhipi")
+
+[node name="Stats" parent="." instance=ExtResource("5_3xuhj")]
+max_health = 1
+
+[node name="PlayerFinder" type="RayCast2D" parent="."]
+position = Vector2(0, -5)
+target_position = Vector2(65, 0)
+collision_mask = 2
+
+[node name="StateTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(11, -5)
+
+[node name="AnimTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="hurt" from="HurtBoxComponent" to="." method="_on_hurt_box_component_hurt"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+[connection signal="timeout" from="StateTimer" to="." method="_on_state_timer_timeout"]

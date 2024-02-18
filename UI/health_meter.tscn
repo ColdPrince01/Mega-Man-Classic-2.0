@@ -26,9 +26,9 @@ stretch_mode = 1
 
 [node name="Full" type="TextureRect" parent="."]
 layout_mode = 1
-offset_top = 56.0
+offset_top = 59.0
 offset_right = 8.0
-offset_bottom = 58.0
+offset_bottom = 61.0
 scale = Vector2(1, -1)
 texture = ExtResource("2_yd8bt")
 expand_mode = 1

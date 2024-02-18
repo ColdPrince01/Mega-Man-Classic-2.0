@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://by55erjf78f2o"]
+[gd_scene load_steps=6 format=3 uid="uid://by55erjf78f2o"]
 
 [ext_resource type="Script" path="res://World/world.gd" id="1_o5m11"]
 [ext_resource type="PackedScene" uid="uid://bbvpfu8bwc0qt" path="res://UI/health_meter.tscn" id="2_by2l6"]
 [ext_resource type="PackedScene" uid="uid://dxtcmcuv30kr8" path="res://World/galaxy_man_level.tscn" id="4_mm6ay"]
 [ext_resource type="PackedScene" uid="uid://dej8dwa6y3t55" path="res://Player/test_player.tscn" id="4_wnu5d"]
-[ext_resource type="PackedScene" uid="uid://e8tyv6nw01dw" path="res://OtherScenes/camera_2d.tscn" id="5_p531h"]
 [ext_resource type="PackedScene" uid="uid://bwy2rptscnmd6" path="res://OtherScenes/parallax.tscn" id="6_jrs2b"]
 
 [node name="World" type="Node2D"]
@@ -22,16 +21,14 @@ metadata/_edit_lock_ = true
 [node name="GalaxyManLevel" parent="." instance=ExtResource("4_mm6ay")]
 metadata/_edit_lock_ = true
 
+[node name="Room2" parent="GalaxyManLevel" index="3"]
+visible = true
+
 [node name="CollisionShape2D" parent="GalaxyManLevel/Room2" index="0"]
 position = Vector2(1184.5, -264)
 
-[node name="Camera2D" parent="." node_paths=PackedStringArray("player_on_path", "world") instance=ExtResource("5_p531h")]
-position = Vector2(136, 97)
-player_on_path = NodePath("../TestPlayer")
-world = NodePath("..")
-
 [node name="TestPlayer" parent="." instance=ExtResource("4_wnu5d")]
-position = Vector2(136, 164)
+position = Vector2(134, 163)
 
 [node name="Parallax" parent="." instance=ExtResource("6_jrs2b")]
 

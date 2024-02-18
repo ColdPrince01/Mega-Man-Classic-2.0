@@ -5,6 +5,7 @@ extends Node2D
 
 var is_reflected := false
 var velocity = Vector2.ZERO
+var direction : Vector2
 
 @onready var bullet_behavior = $BulletBehavior
 @onready var reflect_destroy = $ReflectDestroy
@@ -12,6 +13,11 @@ var velocity = Vector2.ZERO
 @onready var sprite_2d = $Sprite2D
 
 
+func initialize(pos : Vector2, dir: Vector2, velo: int):
+	global_position = pos
+	direction = dir
+	velocity = velo
+	
 
 
 func update_velocity():
@@ -23,18 +29,7 @@ func _process(delta):
 	
 
 #this doesn't work yet 
-func reflected():
-	if is_reflected:
-		return
-		
-		bullet_behavior.bullet_speed = 60.0
-		bullet_behavior.bullet_gravity = 400.0
-		bullet_behavior.angle_in_degrees = randf_range(230, 310)
-		
-		reflect_animation.play("reflected")
-		reflect_destroy.start()
-		
-		is_reflected = true
+
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

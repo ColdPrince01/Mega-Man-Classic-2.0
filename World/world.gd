@@ -10,8 +10,8 @@ func _enter_tree():
 	MainInstances.world = self
 
 func _ready():
-	await ScreenTransition.fade_out()
 	RenderingServer.set_default_clear_color(Color.BLACK)
+	await ScreenTransition.fade_out()
 	Events.player_died.connect(game_over)
  
 

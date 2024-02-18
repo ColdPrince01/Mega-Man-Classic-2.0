@@ -4,7 +4,7 @@ extends Resource
 @export var move_speed = 78.0 #Speed Value
 @export var acceleration = 600.0 
 @export var friction = 1000.0
-@export var jump_velocity = 320.0 #Jump Velocity/Height
+@export var jump_velocity = 300.0 #Jump Velocity/Height
 @export var gravity_scale = 1.0
 @export var air_resistance = 200.0
 @export var air_acceleration = 200.0 

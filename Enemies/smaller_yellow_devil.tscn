@@ -1,0 +1,144 @@
+[gd_scene load_steps=15 format=3 uid="uid://cjbuly8qcjwnm"]
+
+[ext_resource type="Script" path="res://Enemies/smaller_yellow_devil.gd" id="1_02b57"]
+[ext_resource type="Texture2D" uid="uid://ghsr277mci47" path="res://Sprites/SmallYellowDevil.png" id="2_2ldbq"]
+[ext_resource type="PackedScene" uid="uid://b1xjd73y6tlek" path="res://OtherScenes/hurt_box_component.tscn" id="3_wqsty"]
+[ext_resource type="PackedScene" uid="uid://cvnae2jand31t" path="res://OtherScenes/hit_box_component.tscn" id="4_xwfns"]
+[ext_resource type="PackedScene" uid="uid://k4ueou2ric1h" path="res://OtherScenes/stats.tscn" id="5_ub82i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sjij5"]
+size = Vector2(14, 14)
+
+[sub_resource type="Animation" id="Animation_yprsv"]
+resource_name = "blinking"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.6, 1.7, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="Animation" id="Animation_30e6n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hqac3"]
+_data = {
+"RESET": SubResource("Animation_30e6n"),
+"blinking": SubResource("Animation_yprsv")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8mhty"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_juij3"]
+size = Vector2(12, 12)
+
+[sub_resource type="Animation" id="Animation_3um8f"]
+resource_name = "blink"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D/Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_5m6v6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatableBody2D/Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jxhne"]
+_data = {
+"RESET": SubResource("Animation_5m6v6"),
+"blink": SubResource("Animation_3um8f")
+}
+
+[node name="SmallerYellowDevil" type="Node2D"]
+z_index = 9
+script = ExtResource("1_02b57")
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+shape = SubResource("RectangleShape2D_sjij5")
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
+texture = ExtResource("2_2ldbq")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D"]
+autoplay = "blinking"
+libraries = {
+"": SubResource("AnimationLibrary_hqac3")
+}
+
+[node name="HurtBoxComponent" parent="AnimatableBody2D" instance=ExtResource("3_wqsty")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/HurtBoxComponent"]
+shape = SubResource("RectangleShape2D_8mhty")
+
+[node name="HitBoxComponent" parent="AnimatableBody2D" instance=ExtResource("4_xwfns")]
+collision_mask = 8
+damage = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/HitBoxComponent"]
+shape = SubResource("RectangleShape2D_juij3")
+
+[node name="HurtBlink" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jxhne")
+}
+
+[node name="Stats" parent="." instance=ExtResource("5_ub82i")]
+max_health = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.65
+one_shot = true
+autostart = true
+
+[connection signal="hurt" from="AnimatableBody2D/HurtBoxComponent" to="." method="_on_hurt_box_component_hurt"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

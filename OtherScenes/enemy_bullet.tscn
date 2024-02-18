@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://di00u5w8lnrep"]
+
+[ext_resource type="PackedScene" uid="uid://br6kjkwotfs8l" path="res://OtherScenes/bullet.tscn" id="1_yp0xj"]
+[ext_resource type="Texture2D" uid="uid://bud1ucqkjd7kg" path="res://Sprites/EnemyBullet.png" id="2_oc4bk"]
+[ext_resource type="Script" path="res://OtherScenes/enemy_bullet.gd" id="2_qqfmj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0oj7p"]
+size = Vector2(6, 6)
+
+[node name="EnemyBullet" instance=ExtResource("1_yp0xj")]
+z_index = 7
+script = ExtResource("2_qqfmj")
+bullet_speed = 200
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_oc4bk")
+
+[node name="HitBoxComponent" parent="." index="2"]
+collision_mask = 8
+damage = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent" index="0"]
+shape = SubResource("RectangleShape2D_0oj7p")
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="3"]
+position = Vector2(2.38419e-07, 2.38419e-07)
+scale = Vector2(0.4, 0.4)

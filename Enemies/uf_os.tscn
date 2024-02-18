@@ -1,0 +1,114 @@
+[gd_scene load_steps=12 format=3 uid="uid://bx2cljnko6qxb"]
+
+[ext_resource type="Script" path="res://Enemies/uf_os.gd" id="1_76o7u"]
+[ext_resource type="Texture2D" uid="uid://co0ey63qkna8j" path="res://Sprites/UFos2.png" id="1_c1vcs"]
+[ext_resource type="PackedScene" uid="uid://cvnae2jand31t" path="res://OtherScenes/hit_box_component.tscn" id="3_ci5jd"]
+[ext_resource type="PackedScene" uid="uid://b1xjd73y6tlek" path="res://OtherScenes/hurt_box_component.tscn" id="4_tdrbu"]
+[ext_resource type="PackedScene" uid="uid://k4ueou2ric1h" path="res://OtherScenes/stats.tscn" id="5_kmmv7"]
+
+[sub_resource type="Animation" id="Animation_0hoix"]
+resource_name = "Float"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_bskly"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7mh85"]
+_data = {
+"Float": SubResource("Animation_0hoix"),
+"RESET": SubResource("Animation_bskly")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pokbq"]
+size = Vector2(20, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4aa2"]
+size = Vector2(16, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8k7lg"]
+size = Vector2(16, 11)
+
+[node name="UFOs" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_76o7u")
+init_dir_y = 1
+init_dir_x = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("1_c1vcs")
+hframes = 4
+
+[node name="UFOPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Float"
+libraries = {
+"": SubResource("AnimationLibrary_7mh85")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_pokbq")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -7)
+scale = Vector2(1, 0.7)
+
+[node name="GravTimer" type="Timer" parent="."]
+wait_time = 1.25
+autostart = true
+
+[node name="GravTimer2" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("3_ci5jd")]
+collision_mask = 8
+damage = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_g4aa2")
+
+[node name="HurtBoxComponent" parent="." instance=ExtResource("4_tdrbu")]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_8k7lg")
+
+[node name="Stats" parent="." instance=ExtResource("5_kmmv7")]
+max_health = 1
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="GravTimer" to="." method="_on_grav_timer_timeout"]
+[connection signal="timeout" from="GravTimer2" to="." method="_on_grav_timer_2_timeout"]
+[connection signal="hurt" from="HurtBoxComponent" to="." method="_on_hurt_box_component_hurt"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]

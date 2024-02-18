@@ -7,7 +7,7 @@ extends State
 var spawn_timer := 0.0
 
 func enter() -> void:
-	
+	parent.on_spawn = true
 	parent.teleport_player.play("teleport_in")
 	spawn_timer = spawn_time
 	
@@ -20,3 +20,8 @@ func process_physics(delta: float) -> State:
 	if spawn_timer <= 0.0:
 		return idle_state
 	return null
+
+
+
+func exit() -> void:
+	parent.on_spawn = false
