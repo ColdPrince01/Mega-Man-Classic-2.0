@@ -40,6 +40,7 @@ func handle_anims():
 	elif anim_timer.time_left <= 0.0:
 		animation_player.play("closed")
 
+
 func spawn_bullets(spawn_pos):
 	var bullet : Node2D
 	var world = get_tree().current_scene
@@ -52,6 +53,7 @@ func spawn_bullets(spawn_pos):
 		world.add_child.call_deferred(bullet)
 	state_timer.start()
 	
+
 
 func _on_stats_no_health():
 	Utils.instantiate_scene_on_world(ExplosionEffectScene, global_position + Vector2(0,-7))

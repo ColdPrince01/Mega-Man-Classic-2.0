@@ -26,7 +26,7 @@ func stop(sound_stream):
 			sound_player.stop()
 
 
-func fade_out(sound_stream, delta):
+func fade_out(sound_stream, delta : float):
 	for sound_player in sound_players:
 		if sound_player.playing:
 			sound_player.volume_db -= delta

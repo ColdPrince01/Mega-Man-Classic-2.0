@@ -36,7 +36,7 @@ const MAX_LEMONS = 3
 @onready var room_detector = $RoomDetector
 @onready var camera_2d = $Camera2D
 
-@onready var ladder_scene = get_tree().current_scene.get_node("Ladder")
+
 
 
 var is_damaged := false
@@ -52,7 +52,7 @@ var on_spawn := false
 
 var input_direction = Input.get_axis("ui_left","ui_right")
 var vertical_direction = Input.get_axis("ui_up", "ui_down")
-
+var has_control := true
 
 func _enter_tree():
 	MainInstances.player = self
@@ -66,27 +66,29 @@ func _ready() -> void:
 	PlayerStats.set_health(PlayerStats.max_health)
 	state_machine.init(self, movement_component)
 	camera_2d.position_smoothing_enabled = false
+	Events.has_control.connect(has_control_set)
 	PlayerStats.no_health.connect(death) #connect to death when the player dies 
 	await get_tree().create_timer(1.15).timeout
 	camera_2d.position_smoothing_enabled = true
 	set_player_ready(true)
 
 func _unhandled_input(event: InputEvent) -> void:
-	state_machine.process_input(event)
-	if Input.is_action_pressed("slow_down"):
-		Engine.time_scale = 0.1
-	else:
-		Engine.time_scale = 1.0
-	if Input.is_action_just_pressed("ui_down"):
-		position.y += 1
+	if has_control:
+		state_machine.process_input(event)
+		if Input.is_action_pressed("slow_down"):
+			Engine.time_scale = 0.01
+		else:
+			Engine.time_scale = 1.0
+		if Input.is_action_just_pressed("ui_down"):
+			position.y += 1
 	
 
 
 
 func _physics_process(delta: float) -> void:
-	if !Global.room_pause:
-		state_machine.process_physics(delta)
-		check_climb()
+	state_machine.process_physics(delta)
+	check_climb()
+	print(velocity.y)
 		
 		
 	
@@ -205,13 +207,15 @@ func death():
 	await(get_tree().create_timer(death_time).timeout) #creates a timer in the sceen tree and sets the wait time equal to "death_time"
 	get_tree().paused = false 
 	effect_spawner.spawn_death_particles(self.global_position)
-	var pos = self.global_position
-	camera_2d.reparent(get_tree().current_scene)
+	camera_2d.reparent(get_tree().current_scene, true)
 	queue_free()
 	Events.player_died.emit()
 
 func teleport_in():
 	Sounds.play(Sounds.appear)
+
+func has_control_set(value):
+	has_control = value
 
 func set_player_ready(value):
 	player_ready = value

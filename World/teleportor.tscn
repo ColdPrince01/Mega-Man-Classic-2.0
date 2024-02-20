@@ -1,0 +1,105 @@
+[gd_scene load_steps=9 format=3 uid="uid://b1ikg45wtkq6l"]
+
+[ext_resource type="Texture2D" uid="uid://buf3jsw3hlep5" path="res://Sprites/Teleporter.png" id="1_3jwx2"]
+[ext_resource type="Script" path="res://World/teleportor.gd" id="1_btq8p"]
+
+[sub_resource type="Animation" id="Animation_g1aru"]
+resource_name = "Idle"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeleportSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_ew4vd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeleportSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_hmulc"]
+resource_name = "teleport_in"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeleportSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_q27vs"]
+resource_name = "teleport_out"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeleportSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 1, 7, 5, 4, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yjeo7"]
+_data = {
+"Idle": SubResource("Animation_g1aru"),
+"RESET": SubResource("Animation_ew4vd"),
+"teleport_in": SubResource("Animation_hmulc"),
+"teleport_out": SubResource("Animation_q27vs")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5byn"]
+size = Vector2(28, 7)
+
+[node name="Teleportor" type="Node2D"]
+script = ExtResource("1_btq8p")
+
+[node name="TeleportSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_3jwx2")
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+libraries = {
+"": SubResource("AnimationLibrary_yjeo7")
+}
+
+[node name="EnterArea" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnterArea"]
+position = Vector2(0, 8.5)
+shape = SubResource("RectangleShape2D_k5byn")
+
+[connection signal="body_entered" from="EnterArea" to="." method="_on_enter_area_body_entered"]
+[connection signal="body_exited" from="EnterArea" to="." method="_on_enter_area_body_exited"]

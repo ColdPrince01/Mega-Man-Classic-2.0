@@ -50,7 +50,7 @@ func process_input(event: InputEvent) -> State:
 #function handles physics process for jumping, will be sent up to the player script and processed under the _physics_process(): function
 func process_physics(delta: float) -> State:
 	parent.velocity.y += movement_data.gravity * delta
-	parent.velocity.y = clamp(parent.velocity.y, -movement_data.max_fall_speed, movement_data.max_fall_speed)
+	parent.velocity.y = clamp(parent.velocity.y, -movement_data.max_fall_speed * 1.5, movement_data.max_fall_speed)
 	
 	if parent.is_damaged: #if the player gets damaged 
 		return stagger_state

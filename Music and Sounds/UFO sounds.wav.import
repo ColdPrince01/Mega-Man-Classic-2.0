@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bq7dj4ysp8my6"
+path="res://.godot/imported/UFO sounds.wav-c54ee4a540f031b8b5f7ba3714d8323f.sample"
+
+[deps]
+
+source_file="res://Music and Sounds/UFO sounds.wav"
+dest_files=["res://.godot/imported/UFO sounds.wav-c54ee4a540f031b8b5f7ba3714d8323f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

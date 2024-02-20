@@ -12,3 +12,4 @@ game_over_theme = ExtResource("3_pyxst")
 menu_theme = ExtResource("4_b60a6")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Music"

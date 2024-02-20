@@ -10,7 +10,6 @@ const ExplosionEffectScene = preload("res://OtherScenes/explosion_effect.tscn")
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
 @onready var stats = $Stats
-@onready var wall_finder = $WallFinder
 @onready var hurt_box_shape = $HurtBoxComponent/HurtBoxShape
 @onready var hurt_flicker = $HurtFlicker
 @onready var collision_shape_2d = $CollisionShape2D

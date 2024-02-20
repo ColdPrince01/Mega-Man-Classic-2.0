@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cefefavcmj056"]
+
+[ext_resource type="Texture2D" uid="uid://fyispn4evhw8" path="res://Sprites/Spikes.png" id="1_mnp5r"]
+[ext_resource type="PackedScene" uid="uid://cvnae2jand31t" path="res://OtherScenes/hit_box_component.tscn" id="2_g5prw"]
+
+[node name="SpikesSide" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, -8)
+rotation = 1.5708
+texture = ExtResource("1_mnp5r")
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("2_g5prw")]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBoxComponent"]
+polygon = PackedVector2Array(0, -16, 16, -13, 16, -12, 0, -9)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="HitBoxComponent"]
+position = Vector2(0, 8)
+polygon = PackedVector2Array(0, -16, 16, -13, 16, -12, 0, -9)

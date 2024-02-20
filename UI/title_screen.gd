@@ -13,6 +13,7 @@ extends ColorRect
 
 func _ready():
 	RenderingServer.set_default_clear_color(Color.BLACK)
+	await ScreenTransition.fade_out()
 	await get_tree().create_timer(2).timeout
 	label.play("fade_in")
 	await label.animation_finished

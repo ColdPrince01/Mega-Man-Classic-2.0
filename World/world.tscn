@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://by55erjf78f2o"]
+[gd_scene load_steps=7 format=3 uid="uid://by55erjf78f2o"]
 
 [ext_resource type="Script" path="res://World/world.gd" id="1_o5m11"]
 [ext_resource type="PackedScene" uid="uid://bbvpfu8bwc0qt" path="res://UI/health_meter.tscn" id="2_by2l6"]
 [ext_resource type="PackedScene" uid="uid://dxtcmcuv30kr8" path="res://World/galaxy_man_level.tscn" id="4_mm6ay"]
 [ext_resource type="PackedScene" uid="uid://dej8dwa6y3t55" path="res://Player/test_player.tscn" id="4_wnu5d"]
 [ext_resource type="PackedScene" uid="uid://bwy2rptscnmd6" path="res://OtherScenes/parallax.tscn" id="6_jrs2b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0k60"]
+size = Vector2(320, 224.5)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_o5m11")
@@ -22,22 +25,68 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="Room2" parent="GalaxyManLevel" index="3"]
-visible = true
+visible = false
 
 [node name="CollisionShape2D" parent="GalaxyManLevel/Room2" index="0"]
-position = Vector2(1184.5, -264)
+position = Vector2(1184, -144.25)
+shape = SubResource("RectangleShape2D_u0k60")
+
+[node name="Ladder" parent="GalaxyManLevel/Ladders" index="0"]
+collision_mask = 0
+
+[node name="YellowDevil" parent="GalaxyManLevel/Enemys" index="18"]
+z_index = 9
+
+[node name="YellowDevil3" parent="GalaxyManLevel/Enemys" index="19"]
+z_index = 7
+
+[node name="YellowDevil2" parent="GalaxyManLevel/Enemys" index="20"]
+z_index = 5
+
+[node name="YellowDevil4" parent="GalaxyManLevel/Enemys" index="21"]
+z_index = 7
+
+[node name="Ladders2" type="Node" parent="GalaxyManLevel"]
 
 [node name="TestPlayer" parent="." instance=ExtResource("4_wnu5d")]
-position = Vector2(134, 163)
+position = Vector2(130, 162)
+safe_margin = 0.04
 
 [node name="Parallax" parent="." instance=ExtResource("6_jrs2b")]
 
 [editable path="GalaxyManLevel"]
 [editable path="GalaxyManLevel/Room1"]
 [editable path="GalaxyManLevel/Room2"]
-[editable path="GalaxyManLevel/Ladder"]
-[editable path="GalaxyManLevel/Ladder2"]
-[editable path="GalaxyManLevel/Ladder3"]
-[editable path="GalaxyManLevel/Ladder4"]
-[editable path="GalaxyManLevel/Ladder5"]
-[editable path="GalaxyManLevel/Ladder6"]
+[editable path="GalaxyManLevel/Room4"]
+[editable path="GalaxyManLevel/Room5"]
+[editable path="GalaxyManLevel/Room3"]
+[editable path="GalaxyManLevel/Room6"]
+[editable path="GalaxyManLevel/Room7"]
+[editable path="GalaxyManLevel/Room8"]
+[editable path="GalaxyManLevel/Room9"]
+[editable path="GalaxyManLevel/Room10"]
+[editable path="GalaxyManLevel/Room11"]
+[editable path="GalaxyManLevel/Ladders/Ladder"]
+[editable path="GalaxyManLevel/Ladders/Ladder2"]
+[editable path="GalaxyManLevel/Ladders/Ladder3"]
+[editable path="GalaxyManLevel/Ladders/Ladder4"]
+[editable path="GalaxyManLevel/Ladders/Ladder5"]
+[editable path="GalaxyManLevel/Ladders/Ladder6"]
+[editable path="GalaxyManLevel/Ladders/Ladder7"]
+[editable path="GalaxyManLevel/Ladders/Ladder8"]
+[editable path="GalaxyManLevel/Ladders/Ladder9"]
+[editable path="GalaxyManLevel/Ladders/Ladder10"]
+[editable path="GalaxyManLevel/Ladders/Ladder11"]
+[editable path="GalaxyManLevel/Ladders/Ladder12"]
+[editable path="GalaxyManLevel/Ladders/Ladder13"]
+[editable path="GalaxyManLevel/Ladders/Ladder14"]
+[editable path="GalaxyManLevel/Ladders/Ladder15"]
+[editable path="GalaxyManLevel/Ladders/Ladder16"]
+[editable path="GalaxyManLevel/Ladders/Ladder17"]
+[editable path="GalaxyManLevel/Ladders/Ladder19"]
+[editable path="GalaxyManLevel/Ladders/Ladder21"]
+[editable path="GalaxyManLevel/Ladders/Ladder20"]
+[editable path="GalaxyManLevel/Ladders/Ladder18"]
+[editable path="GalaxyManLevel/Enemys/YellowDevil2"]
+[editable path="GalaxyManLevel/Enemys/YellowDevil4"]
+[editable path="GalaxyManLevel/Enemys/YellowDevil5"]

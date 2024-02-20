@@ -9,3 +9,4 @@ signal change_active(current_screen, new_screen)
 signal player_died
 signal player_ready(value)
 signal reflected()
+signal has_control(value)

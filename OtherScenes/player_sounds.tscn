@@ -11,4 +11,4 @@ buster_charging = ExtResource("2_td7ic")
 buster_fully_charged = ExtResource("3_kd2lg")
 buster_mini_charged = ExtResource("4_is1rx")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]

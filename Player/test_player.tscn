@@ -22,7 +22,7 @@ script = ExtResource("5_kjbax")
 move_speed = 78.0
 acceleration = 600.0
 friction = 1000.0
-jump_velocity = 300.0
+jump_velocity = 325.0
 gravity_scale = 1.0
 air_resistance = 200.0
 air_acceleration = 200.0
@@ -435,7 +435,7 @@ script = ExtResource("5_kjbax")
 move_speed = 78.0
 acceleration = 600.0
 friction = 1000.0
-jump_velocity = 300.0
+jump_velocity = 310.0
 gravity_scale = 1.0
 air_resistance = 200.0
 air_acceleration = 200.0
@@ -642,8 +642,9 @@ size = Vector2(0, 0)
 
 [node name="TestPlayer" type="CharacterBody2D" groups=["Climbers"]]
 z_index = 25
+position = Vector2(0, -12)
 collision_layer = 2
-collision_mask = 65
+collision_mask = 961
 script = ExtResource("1_8ai5p")
 movement_data = SubResource("Resource_tk04i")
 death_time = 0.45
@@ -823,6 +824,7 @@ collide_with_bodies = false
 [node name="EffectSpawner" parent="." instance=ExtResource("15_5hrw5")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+z_index = 30
 process_callback = 0
 limit_smoothed = true
 position_smoothing_enabled = true

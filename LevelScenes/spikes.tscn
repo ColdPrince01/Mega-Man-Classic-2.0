@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://mufh0hrjllru"]
+[gd_scene load_steps=4 format=3 uid="uid://mufh0hrjllru"]
 
 [ext_resource type="Texture2D" uid="uid://fyispn4evhw8" path="res://Sprites/Spikes.png" id="1_6yto0"]
 [ext_resource type="PackedScene" uid="uid://cvnae2jand31t" path="res://OtherScenes/hit_box_component.tscn" id="2_vigtg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12fti"]
+size = Vector2(16, 3)
 
 [node name="Spikes" type="Node2D"]
 
@@ -10,7 +13,7 @@ position = Vector2(8, -8)
 texture = ExtResource("1_6yto0")
 
 [node name="HitBoxComponent" parent="." instance=ExtResource("2_vigtg")]
-collision_layer = 16
+collision_layer = 17
 collision_mask = 8
 damage = 28
 
@@ -20,3 +23,9 @@ polygon = PackedVector2Array(8, 0, 11, -11, 12, -11, 15, 0)
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="HitBoxComponent"]
 position = Vector2(-8, 0)
 polygon = PackedVector2Array(8, 0, 11, -11, 12, -11, 15, 0)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(8, 0.5)
+shape = SubResource("RectangleShape2D_12fti")

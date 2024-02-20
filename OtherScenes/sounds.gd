@@ -17,6 +17,9 @@ var sounds_path = "res://Music and Sounds/"
 @export var death_sound : AudioStream
 @export var buster_fully_charged : AudioStream
 @export var buster_mini_charged : AudioStream
+@export var teleporter : AudioStream
+@export var UFO : AudioStream
+
 
 @onready var sound_players = get_children() #variable for getting the audio players in the scene 
 
@@ -28,3 +31,16 @@ func play(sound_stream, pitch_scale = 1.0, volume_db = 0.0):
 			sound_player.stream = sound_stream #load the corresponding sound file with the string passed in (ex. "res://Sounds/bullet.wav")
 			sound_player.play() #play the sound 
 			return
+
+func stop(sound_stream):
+	for sound_player in sound_players:
+		if sound_player.is_playing():
+			sound_player.stop()
+			
+
+func fade_out(sound_stream, delta):
+	for sound_player in sound_players:
+		if sound_player.playing:
+			sound_player.volume_db -= delta
+			if sound_player.volume_db <= -30.0:
+				sound_player.stop()
