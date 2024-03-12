@@ -88,7 +88,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	state_machine.process_physics(delta)
 	check_climb()
-	print(velocity.y)
+	
 		
 		
 	

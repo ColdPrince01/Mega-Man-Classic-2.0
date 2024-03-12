@@ -49,7 +49,7 @@ z_index = 7
 [node name="Ladders2" type="Node" parent="GalaxyManLevel"]
 
 [node name="TestPlayer" parent="." instance=ExtResource("4_wnu5d")]
-position = Vector2(130, 162)
+position = Vector2(145, 163)
 safe_margin = 0.04
 
 [node name="Parallax" parent="." instance=ExtResource("6_jrs2b")]

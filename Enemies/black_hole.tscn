@@ -1,0 +1,141 @@
+[gd_scene load_steps=20 format=3 uid="uid://bbmbkrvixko4i"]
+
+[ext_resource type="Script" path="res://Enemies/black_hole.gd" id="1_osx5e"]
+[ext_resource type="Texture2D" uid="uid://c160ckkvsm6jx" path="res://Sprites/BlackHole.png" id="1_rspje"]
+[ext_resource type="PackedScene" uid="uid://cvnae2jand31t" path="res://OtherScenes/hit_box_component.tscn" id="2_461k4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpll6"]
+atlas = ExtResource("1_rspje")
+region = Rect2(0, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xk4io"]
+atlas = ExtResource("1_rspje")
+region = Rect2(38, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcrai"]
+atlas = ExtResource("1_rspje")
+region = Rect2(76, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tg231"]
+atlas = ExtResource("1_rspje")
+region = Rect2(114, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s78x6"]
+atlas = ExtResource("1_rspje")
+region = Rect2(152, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnxnk"]
+atlas = ExtResource("1_rspje")
+region = Rect2(190, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3d5s"]
+atlas = ExtResource("1_rspje")
+region = Rect2(228, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4cyt"]
+atlas = ExtResource("1_rspje")
+region = Rect2(266, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rajj"]
+atlas = ExtResource("1_rspje")
+region = Rect2(304, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v61i2"]
+atlas = ExtResource("1_rspje")
+region = Rect2(342, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lit1w"]
+atlas = ExtResource("1_rspje")
+region = Rect2(380, 0, 38, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eeis8"]
+atlas = ExtResource("1_rspje")
+region = Rect2(418, 0, 38, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4cyem"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpll6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk4io")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hcrai")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tg231")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s78x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnxnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k3d5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4cyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rajj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v61i2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lit1w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eeis8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vhdns"]
+size = Vector2(12.5, 13.5)
+
+[sub_resource type="Gradient" id="Gradient_nu6wf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qlwf8"]
+radius = 100.0
+
+[node name="BlackHole" type="Node2D"]
+script = ExtResource("1_osx5e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4cyem")
+autoplay = "default"
+frame_progress = 0.35636
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("2_461k4")]
+collision_mask = 8
+damage = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+shape = SubResource("RectangleShape2D_vhdns")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 25
+preprocess = 2.0
+direction = Vector2(-1, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 75.0
+radial_accel_max = 75.0
+angle_min = 45.0
+angle_max = 45.0
+color = Color(0.835294, 0.290196, 1, 1)
+color_ramp = SubResource("Gradient_nu6wf")
+
+[node name="ActiveArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ActiveArea"]
+shape = SubResource("CircleShape2D_qlwf8")

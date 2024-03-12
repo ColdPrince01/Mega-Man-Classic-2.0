@@ -2,7 +2,7 @@ extends State
 
 @export var jump_state : State
 @export var idle_state : State
-
+@export var stagger_state : State
 
 func enter():
 	super()
@@ -41,6 +41,8 @@ func process_physics(delta: float) -> State:
 		return jump_state
 	elif !parent.can_climb and parent.is_on_floor():
 		return idle_state
+	elif parent.is_damaged:
+		return stagger_state
 	
 	else:
 		return idle_state
